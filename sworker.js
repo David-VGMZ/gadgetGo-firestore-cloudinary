@@ -1,14 +1,11 @@
-const CACHE_NAME = 'proyectos-pwa-v6';
+const CACHE_NAME = 'proyectos-pwa-v7';
 const PRECACHE_URLS = [
   './',
-  './index.html?homescreen=v2',
   './index.html',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
 ];
-
-
 
 // Instalar SW
 self.addEventListener('install', (event) => {
@@ -31,7 +28,7 @@ self.addEventListener('fetch', (event) => {
 
   const url = event.request.url;
 
-  //EXCEPCIÓN: NO interceptar Firebase
+  // EXCEPCIÓN: SI es Firestore o Cloudinary → red directa SIEMPRE
   if (
     url.includes('firestore.googleapis.com') ||
     url.includes('firebaseio.com') ||
@@ -40,26 +37,28 @@ self.addEventListener('fetch', (event) => {
     url.includes('cloudinary.com') ||
     url.includes('res.cloudinary.com')
   ) {
-    return; // Permite que pase directo a la red
+    event.respondWith(fetch(event.request)); // <- ESTA ES LA SOLUCIÓN REAL
+    return;
   }
 
-  // Manejo normal de cache
+  // MANEJO NORMAL PARA ARCHIVOS LOCALES
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then(cached => 
-      cached ||
-      fetch(event.request).then(resp => {
-        try {
-          if (event.request.method === 'GET') {
-            const copy = resp.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-          }
-        } catch (e) {}
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
 
+      return fetch(event.request).then(resp => {
+        // Cachear solo GETs
+        if (event.request.method === 'GET') {
+          const responseClone = resp.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+        }
         return resp;
       }).catch(() => {
-        if (event.request.destination === 'document') return caches.match('./index.html');
-        return new Response('', { status: 503, statusText: 'Offline' });
-      })
-    )
+        // Fallback para HTML
+        if (event.request.destination === 'document') {
+          return caches.match('./index.html');
+        }
+      });
+    })
   );
 });
