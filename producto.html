@@ -201,8 +201,10 @@
 
         <header id="inicio" class="mx-3 py-5">
         <div class="container-fluid py-5 mt-5">
-           <button id="back-button" class="btn btn-link p-0" aria-label="Volver a la página anterior" type="button">
+           <button class="btn btn-link p-0" aria-label="Volver a la página anterior" type="button">
+               <a href="index.html">
                 <i class="fas fa-arrow-left fa-xl"> Volver</i>
+                </a>
             </button>
         </div>
         <div class="toast-container position-fixed top-0 end-0 p-3" id="toastZone"></div>
@@ -485,11 +487,10 @@
         cargarProducto();
 
         // Botón volver
-        document.getElementById('back-button').addEventListener('click', () => {
-            window.history.back('./index.html');
-        });
+
     </script>
 </body>
 
 </html>
+
 
