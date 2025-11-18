@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#0d6efd" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+    <link rel="manifest" href="manifest.webmanifest"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="icon" href="./icons/icon-192.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        
+        .thumb { height: 70px; object-fit: cover; border-radius: .35rem;}
+        .thumbs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;}
+        #btnInstall {
+        /* Estilos para el boton Instalar App */
+        position: fixed; right: 16px; bottom: 16px;
+        padding: 12px 16px; border: 0; border-radius: 10px;
+        background: #122C4F; color: white; font-size: 14px; cursor: pointer;
+        box-shadow: 0 6px 18px rgba(0,0,0,.2); z-index: 9999;
+        }
+        
+        #btnInstall[hidden] { display: none; }
+        /* Estilos para el encabezado */
+        :root {
+            --primary-blue: #122C4F;
+            --cream-bg: #ffffff;
+            --dark-text: #ffffff;
+        }
+
+        .navbar {
+            background-color: #122C4F;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-text) !important;
+        }
+
+        .nav-link {
+            color: var(--dark-text) !important;
+            margin: 0 1rem;
+            font-weight: 500;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #255ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-danger {
+            border: 2px solid #891521;
+            background-color: #891521;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #DC3545;
+            border: 2px solid #DC3545;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-danger {
+            border: 2px solid #DC3545;
+            color: #DC3545;
+            background-color: transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #DC3545;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-box {
+            width: 120px;
+            height: 120px;
+            border: 3px solid var(--primary-blue);
+            border-radius: 12px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-card .card-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+        }
+
+        .modal-header {
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #CED4DA;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body class="bg-light">
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #122C4F;">
+        <div class="container-fluid">
+            <a href="inicioGG.html">
+                <img src="./icons/icon-512.png" alt="LogoGadget-Go" width="100">
+            </a>
+            <h2 class="px-5 text-white" style="color: #122C4F; font-weight: 700;">Inventario</h2>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav"> <!--Enlaces de los apartados (Inicio, Inventario, Productos)-->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="inicioGG.html" style="font-size: 1.2rem;">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#productos" style="font-size: 1.2rem;">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="inventario2.html" style="font-size: 1.2rem;">Inventario</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header id="inicio" class="text-center py-5" style="background-color: #FBF9E4;">
+        <div class="container"></div>
+    </header>
+    
+    <section class="py-5 mb-4" style="background-color: #FBF9E4;">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h3 class="display-1 mb-3" style="color: #122C4F; font-weight: 400;"><strong>Gestion de Productos</strong></h3>
+                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#proyectoModal" >
+                    Registrar Nuevo Producto
+                </button>
+                <button id="clearAll" class="btn btn-danger btn-lg ms-2">
+                    Limpiar todo
+                </button>
+            </div>
+            <!--Contenedor para mostrar los productos-->
+            <div id="productsContainer" class="row mt-4 py-5"></div>
+        </div>
+    </section>
+    <!--Formulario de los productos-->
+    <div class="modal fade" id="proyectoModal" tabindex="-1" aria-labelledby="proyectoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="proyectoModalLabel">
+                        Registro de Nuevo Producto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4"> <!--Formulario para registrar el producto-->
+                    <form id="productoForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombreProducto" class="form-label">Nombre *</label>
+                                <input type="text" class="form-control" id="nombreProducto" placeholder="Ej: Cargador Tipo C..." required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="categoria" class="form-label">Categoria *</label>
+                                <select class="form-select" id="categoria" required>
+                                    <option value="">Seleccionar categoria</option>
+                                    <option value="cel">Celulares</option>
+                                    <option value="computadoras">Equipos de Computo</option>
+                                    <option value="laptops">Laptops</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="modProducto" class="form-label">Modelo *</label>
+                                <input type="text" class="form-control" id="modProducto" placeholder="Ej: Teclado Razer, Samsung S22, Mouse Logitech g502" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="claveProducto" class="form-label">Clave *</label>
+                                <input type="text" class="form-control" id="claveProducto" placeholder="Ej: SMS-4214" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="precioProd" class="form-label">Precio *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="precioProd" placeholder="0.00" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="stockProd" class="form-label">Stock *</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="stockProd" placeholder="0" step="1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="estadoProducto" class="form-label">Estado *</label>
+                                <select class="form-select" id="estadoProducto" required>
+                                    <option value="">Seleccionar estado</option>
+                                    <option value="nuevo">Nuevo</option>
+                                    <option value="usado-comoNuevo">Usado (Como nuevo)</option>
+                                    <option value="usado-buenEstado">Usado (Buen estado)</option>
+                                </select>
+                            </div>
+                            <div class="col-12" >
+                                <label for="descripcion" class="form-label">Características</label>
+                                <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripcion del Producto"></textarea>
+                            </div>
+                            <!--Modificacion: Subir una o varias imagenes-->
+                            <div class="col-12">
+                                <label for="imgProducto" class="form-label">Imagenes del Producto</label>
+                                <input type="file" id="imgProducto" class="form-control" accept="image/*" multiple>
+                                <div class="form-text">Maximo 3 imagenes del producto (peso máximo: 5 MB, Tamaño máximo: 512x512)</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <!--Botones para cancelar y guardar-->
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" form="productoForm" class="btn btn-primary">
+                        Guardar Producto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+
+        //Roles de usuarios
+        const userRole = localStorage.getItem('userRole');
+        const userEmail = localStorage.getItem('userEmail');
+
+        if (userRole !== 'admin') {
+            alert('Acceso denegado. Solo administradores pueden acceder al inventario.');
+            window.location.href = 'inicioGG.html';
+        }
+        console.log(`🔐 Acceso permitido - Admin: ${userEmail}`);
+
+        function generarID() {
+            return 'prod-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 9);
+        }
+
+        const CLOUD_NAME = "dei5fnqt5";
+        const UPLOAD_PRESET = "pwa-unsigned";
+
+
+        console.log("¿Existe imgProducto?", document.getElementById("imgProducto"));
+
+        //Inicialiazar modal de Bootstrap
+        const modal = new bootstrap.Modal(document.getElementById('proyectoModal'));
+
+        //Esta funcion es para guardar  los productos en el localStorage
+        //const fileInput = document.getElementById("imgProd");
+        //let urlImagen = "";
+
+
+
+        //Formatear numero a moneda MXN
+        function currencyMX(n) {
+            return Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        //Leer multiples archivos como Data URL
+
+        //Render de tarjetas
+
+        //Toast Helper al subir Producto
+        function showToast(msg, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-bg-' + (type === 'success' ? 'success' : 'danger') + ' position-fixed top-0 end-0 m-3';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${msg}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>`;
+                document.body.appendChild(toast);
+                const bsToast = new bootstrap.Toast(toast);
+                bsToast.show();
+                setTimeout(() => toast.remove(), 3500);
+        }
+
+        async function subirImagenCloudinary(file) {
+        const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", UPLOAD_PRESET);
+
+        const res = await fetch(url, {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (!data.secure_url) {
+            throw new Error("Error al subir imagen a Cloudinary");
+        }
+
+        return data.secure_url; // URL de la imagen
+    }
+
+
+        //Submit del formulario con lectura de imagenes
+
+        /* -----------------------------
+        IMPORTS FIREBASE (CDN)
+        -----------------------------*/
+        import { initializeApp } 
+            from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            getDocs,
+            deleteDoc,
+            doc
+        } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+        import { 
+            getAuth, onAuthStateChanged, signOut 
+        } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+        /* -----------------------------
+        FIREBASE CONFIG
+        -----------------------------*/
+        const firebaseConfig = {
+            apiKey: "AIzaSyBg9o3wVZoA26Aob2RnbVPV8vGv4GE44gs",
+            authDomain: "primer-proyecto-7b2f4.firebaseapp.com",
+            projectId: "primer-proyecto-7b2f4",
+            storageBucket: "primer-proyecto-7b2f4.firebasestorage.app",
+            messagingSenderId: "627220736817",
+            appId: "1:627220736817:web:a2eb4f187322c609f11e10"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        /* -----------------------------
+        VARIABLES
+        -----------------------------*/
+        let productos = [];
+
+        /* -----------------------------
+        CARGAR PRODUCTOS
+        -----------------------------*/
+        async function loadProducts() {
+            try {
+                const snap = await getDocs(collection(db, "productos"));
+                
+                productos = snap.docs.map(d => {
+                    const data = d.data();
+                    delete data.id;
+                    const producto = { 
+                        id: d.id,  
+                        ...data 
+                    };
+                    return producto;
+                });              
+                renderProducts();             
+            } catch (error) {
+                console.error("ERROR en loadProducts:", error);
+            }
+        }
+
+        /* -----------------------------
+        GUARDAR PRODUCTO
+        -----------------------------*/
+        document.getElementById('productoForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const fileInput = document.getElementById("imgProducto");
+            const archivos = fileInput.files;
+            let urlsCloudinary = [];
+
+            try {
+                if (archivos.length > 0) {
+                    for (let file of archivos) {
+                        const url = await subirImagenCloudinary(file);
+                        urlsCloudinary.push(url);
+                    }
+                }
+            } catch (err) {
+                console.error("Error subiendo imágenes", err);
+                showToast("Error subiendo imágenes a Cloudinary", "error");
+                return;
+            }
+
+            const producto = {
+                nombre: document.getElementById('nombreProducto').value,
+                categoria: document.getElementById('categoria').value,
+                modelo: document.getElementById('modProducto').value,
+                clave: document.getElementById('claveProducto').value,
+                precio: parseFloat(document.getElementById('precioProd').value),
+                estado: document.getElementById('estadoProducto').value,
+                stock: document.getElementById('stockProd').value,
+                descripcion: document.getElementById('descripcion').value,
+                imagenes: urlsCloudinary
+            };
+
+            await addDoc(collection(db, "productos"), producto);
+
+            const modalEl = document.getElementById("proyectoModal");
+            const modalInstance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            modalInstance.hide();
+
+            this.reset();
+
+            loadProducts();
+
+            showToast("Producto guardado");
+        });
+
+        /* -----------------------------
+        BORRAR PRODUCTO
+        -----------------------------*/
+        async function deleteProduct(id) {
+            
+            try {
+                
+                const docRef = doc(db, "productos", id);             
+                await deleteDoc(docRef);
+                showToast("Producto eliminado", "danger");
+                await loadProducts();
+                
+            } catch (error) {
+                showToast("Error al eliminar: " + error.message, "danger");
+            }
+        }
+
+        /* -----------------------------
+        MOSTRAR PRODUCTOS
+        -----------------------------*/
+        function renderProducts() {
+            const container = document.getElementById("productsContainer");
+            container.innerHTML = "";
+
+            console.log("🔍 Total productos a renderizar:", productos.length);
+
+            productos.forEach((p, index) => {
+                
+                // Imagen por defecto
+                let imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCBmaWxsPSIjZTVlN2ViIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE4MCIvPjx0ZXh0IGZpbGw9IiM5Y2EzYWYiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiB4PSI1MCUiIHk9IjUwJSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+U2luIEltYWdlbjwvdGV4dD48L3N2Zz4=';
+                
+                // MANEJO DE AMBOS FORMATOS DE IMAGEN
+                if (Array.isArray(p.imagenes) && p.imagenes.length > 0) {
+                    const primeraImagen = p.imagenes[0];
+                    
+                    // Caso 1: Es un string (URL de Cloudinary)
+                    if (typeof primeraImagen === 'string' && primeraImagen.trim() !== '') {
+                        imgSrc = primeraImagen;
+                    } 
+                    // Caso 2: Es un objeto con dataURL (formato viejo)
+                    else if (typeof primeraImagen === 'object' && primeraImagen.dataURL) {
+                        imgSrc = primeraImagen.dataURL;
+                    }
+                }
+
+                const card = document.createElement("div");
+                card.className = "col-md-3 mb-4";
+                
+                card.innerHTML = `
+                    <div class="card shadow-sm">
+                        <img src="${imgSrc}" class="card-img-top" style="height:180px; object-fit:cover;" alt="${p.nombre}">
+                        <div class="card-body">
+                            <h5>${p.nombre || 'Sin nombre'}</h5>
+                            <p>${p.clave || 'Sin clave'}</p>
+                            <p><strong>Precio:</strong> $${p.precio || '0'}</p>
+                            <button type="button" class="btn btn-danger btn-sm delete-btn" data-firebaseid="${p.id}">Eliminar</button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+
+                // EVENT LISTENER CON DEBUGGING
+                card.querySelector(".delete-btn").addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const productoId = e.currentTarget.getAttribute('data-firebaseid');
+                    deleteProduct(productoId);
+                });
+            });
+        }
+
+        /* -----------------------------
+        LECTOR DE IMÁGENES
+        -----------------------------*/
+        // Lee y COMPRIME múltiples imágenes
+        function readFilesAsDataURLs(fileList, maxSize = 512) {
+            const files = Array.from(fileList || []);
+
+            return Promise.all(files.map(file => compressImage(file, maxSize)));
+        }
+
+        // Comprime una sola imagen
+        function compressImage(file, maxSize = 512) {
+            return new Promise((resolve, reject) => {
+
+                const reader = new FileReader();
+                reader.onload = e => {
+
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+
+                        // Obtener tamaño original
+                        let width = img.width;
+                        let height = img.height;
+
+                        // Redimensionar si es necesario
+                        if (width > height) {
+                            if (width > maxSize) {
+                                height *= maxSize / width;
+                                width = maxSize;
+                            }
+                        } else {
+                            if (height > maxSize) {
+                                width *= maxSize / height;
+                                height = maxSize;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Comprimir como JPG calidad 0.75
+                        const dataURL = canvas.toDataURL("image/jpeg", 0.75);
+
+                        resolve({
+                            name: file.name,
+                            type: "image/jpeg",
+                            dataURL: dataURL
+                        });
+                    };
+
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        /* -----------------------------
+        INICIO
+        -----------------------------*/
+        loadProducts();
+
+
+        </script>
+    </body>
+</html>
