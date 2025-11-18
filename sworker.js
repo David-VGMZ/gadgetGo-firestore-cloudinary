@@ -1,8 +1,8 @@
-const CACHE_NAME = 'proyectos-pwa-v5';
+const CACHE_NAME = 'proyectos-pwa-v6';
 const PRECACHE_URLS = [
   './',
-  './inicioGG.html?homescreen=v2',
-  './inicioGG.html',
+  './index.html?homescreen=v2',
+  './index.html',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
