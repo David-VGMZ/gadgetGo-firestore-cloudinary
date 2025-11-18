@@ -1,7 +1,7 @@
 {
   "name": "Gadget Go",
   "short_name": "GadgetGo",
-  "start_url": "./inicioGG.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#122C4F",
