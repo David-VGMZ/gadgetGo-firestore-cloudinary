@@ -193,19 +193,17 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#productos" style="font-size: 1.2rem;">Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="#modal" data-bs-toggle="modal" data-bs-target="#myModal" style="font-size: 1.2rem;">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html" style="font-size: 1.2rem;">Inventario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="inventario2.html" style="font-size: 1.2rem;">Inventario</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-        <header id="inicio" class="mx-3 py-5">
-        <div class="container-fluid py-5 mt-5">
-           <button class="btn btn-link p-0" aria-label="Volver a la página anterior" type="button">
-               <a href="index.html">
-                <i class="fas fa-arrow-left fa-xl"> Volver</i>
-                </a>
-            </button>
+    <header id="inicio" class="py-5">
+        <div class="container-fluid py-5 mt-5 mb-4">
+            <a class="ms-3" href="index.html">
+                <button class="btn btn-primary">Volver</button>
+            </a>
         </div>
         <div class="toast-container position-fixed top-0 end-0 p-3" id="toastZone"></div>
     </header>
@@ -396,9 +394,9 @@
             const hash = window.location.hash;
             const id = hash ? hash.substring(1) : null; // Quitar el #
 
-            console.log("🔍 URL completa:", window.location.href);
-            console.log("🔍 Hash:", hash);
-            console.log("🔍 ID extraído:", id);
+            console.log("URL completa:", window.location.href);
+            console.log("Hash:", hash);
+            console.log("ID extraído:", id);
 
             const cont = document.getElementById("producto-container");
 
@@ -440,23 +438,23 @@
 
                 // Renderizar producto
                 cont.innerHTML = `
-                    <div class="card shadow p-4">
+                    <div class="card shadow p-5 ">
                         <div class="row">
                             <div class="col-md-6 text-center">
                                 <img src="${imgSrc}" class="img-fluid rounded" alt="${prod.nombre}" style="max-height: 500px; object-fit: cover;">
                             </div>
                             <div class="col-md-6 py-2">
                                 <h2>${prod.nombre}</h2>
-                                <h4 class="text-success mb-3">$${Number(prod.precio).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</h4>
+                                <h4 class="text-success mb-3" style="font-size: 2rem;"><strong>$${Number(prod.precio).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</strong></h4>
                                 
                                 <div class="mb-3">
                                     <p class="mb-1"><strong>Modelo:</strong> ${prod.modelo || 'N/A'}</p>
                                     <p class="mb-1"><strong>Categoría:</strong> ${prod.categoria || 'N/A'}</p>
                                     <p class="mb-1"><strong>Estado:</strong> <span class="badge bg-info">${prod.estado || 'N/A'}</span></p>
-                                    <p class="mb-1"><strong>Stock:</strong> ${prod.stock || '0'} unidades</p>
+                                    <p class="mb-1"> ${prod.stock || '0'} unidades</p>
                                 </div>
 
-                                <h5>Descripción:</h5>
+                                <h5>Caracteristicas:</h5>
                                 <p>${prod.descripcion || "Sin descripción"}</p>
                                 
                                 <button class="btn btn-primary w-100 mt-3" id="btnAgregar">
@@ -486,11 +484,11 @@
         // Cargar producto al cargar la página
         cargarProducto();
 
-        // Botón volver
-
+        /* Botón volver
+        document.getElementById('back-button').addEventListener('click', () => {
+            window.history.back();
+        });
+        */
     </script>
 </body>
-
 </html>
-
-
