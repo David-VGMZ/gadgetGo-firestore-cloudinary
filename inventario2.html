@@ -266,7 +266,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="inicioGG.html" style="font-size: 1.2rem;">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html" style="font-size: 1.2rem;">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#productos" style="font-size: 1.2rem;">Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="inventario2.html" style="font-size: 1.2rem;">Inventario</a></li>
                 </ul>
@@ -309,8 +309,8 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tab-laptops" data-categoria="laptops" type="button">
-                        <i class="fas fa-laptop me-2"></i>Laptops
+                    <button class="nav-link" id="tab-cables" data-categoria="cables" type="button">
+                        <i class="fas fa-laptop me-2"></i>Cableado
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -350,7 +350,7 @@
                                     <option value="">Seleccionar categoria</option>
                                     <option value="cel">Celulares</option>
                                     <option value="computadoras">Equipos de Computo</option>
-                                    <option value="laptops">Laptops</option>
+                                    <option value="cables">Cableado</option>
                                     <option value="audio">Audio</option>
                                 </select>
                             </div>
@@ -755,7 +755,7 @@
             const nombres = {
                 'cel': 'Celulares',
                 'computadoras': 'Equipos de Cómputo',
-                'laptops': 'Laptops',
+                'cables': 'Cableado',
                 'audio' : 'Audio'
             };
             return nombres[categoria] || categoria;
@@ -766,7 +766,7 @@
                 'todas': productos.length,
                 'cel': productos.filter(p => p.categoria === 'cel').length,
                 'computadoras': productos.filter(p => p.categoria === 'computadoras').length,
-                'laptops': productos.filter(p => p.categoria === 'laptops').length,
+                'cables': productos.filter(p => p.categoria === 'cables').length,
                 'audio': productos.filter(p => p.categoria === 'audio').length
             };
 
