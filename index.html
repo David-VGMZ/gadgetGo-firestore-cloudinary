@@ -297,7 +297,7 @@
             max-width: 95%;
             border-radius: 15px; /* Menos redondeado */
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
         }
 
         /* Ajustar altura de las imágenes para hacerlo más rectangular */
@@ -353,7 +353,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a href="inicioGG.html">
+            <a href="index.html">
                 <img class="thumbs mx-4" src="./icons/icon-512.png" alt="LogoGadget-Go" width="100">
             </a>
                 <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#carritoModal" style="font-size: 1.4rem;">
@@ -375,8 +375,8 @@
         </div>
     </nav>
     <!--Inicio-->
-    <header id="inicio" class="mt-5 py-4" style="background-color: #fff6e0;">
-        <div class="container py-4">
+    <header id="inicio" class=" pt-5 pb-0" style="background-color: #fff6e0;">
+        <div class="my-5 py-3">
             <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -513,10 +513,8 @@
     const carritoModal = document.getElementById('carritoModal');
     if (carritoModal) {
         carritoModal.addEventListener('shown.bs.modal', function () {
-            // Esperar un poquito para que el DOM se actualice
-            setTimeout(() => {
+
                 actualizarCarrito();
-            }, 100);
         });
     }
 
@@ -552,7 +550,7 @@
         toastEl.setAttribute("aria-atomic", "true");
 
         toastEl.innerHTML = `
-            <div class="d-flex">
+            <div class="d-flex my-5">
                 <div class="toast-body">${msg}</div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Close"></button>
@@ -565,17 +563,15 @@
         toast.show();
 
         // remover después de 4 segundos
-        setTimeout(() => toastEl.remove(), 4000);
+        setTimeout(() => toastEl.remove(), 2000);
     }
 </script>
-
 
     <section id="productos" class="container my-5">
         <h2 class="text-center mb-5" style="font-size: 1.5rem;"><strong>Productos Disponibles</strong></h2>
         <div id="productos-container" class="row g-4"></div>
     </section>
     
-
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
@@ -638,14 +634,13 @@
             
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" onclick="vaciarCarrito()">
-                        <i class="fas fa-trash me-2"></i>Vaciar carrito
+                        <i class="fas fa-trash me-2"></i>Vaciar Carrito
                     </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Seguir comprando
-                    </button>
-                    <button type="button" class="btn btn-primary" id="btnProcederPago" onclick="abrirCheckout()">
-                        <i class="fas fa-credit-card me-2"></i>Proceder al pago
-                    </button>
+                    <a href="carrito.html">
+                        <button type="button" class="btn btn-secondary">
+                            Ir al Carrito
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -725,7 +720,7 @@
             </ul>
 
     </footer>
-    <!-- Firebase + Catalogo (modular) -->
+    <!-- Firebase -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
         import { getFirestore, collection, getDocs, query, orderBy, setDoc, doc, addDoc, serverTimestamp, getDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
@@ -998,7 +993,7 @@
             contenedor.innerHTML = carrito.map(p => `
                 <div class="producto border rounded p-3 my-2 d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center flex-grow-1">
-                        <img src="${p.imagen}" width="80" height="80" class="me-3 rounded" style="object-fit: cover;">
+                        <img src="${p.imagen}" width="80" height="80" class="me-3 rounded" style="object-fit: cover; cursor: pointer;" onclick="window.location.href='producto.html#${p.id}'">
                         <div class="flex-grow-1">
                             <h6 class="mb-1">${p.nombre}</h6>
                             <p class="mb-0 text-muted">$${Number(p.precio).toLocaleString('es-MX', {minimumFractionDigits: 2})} x ${p.cantidad} Pieza(s)</p>
