@@ -262,10 +262,11 @@
     contenedor.innerHTML = carrito.map(p => `
       <div class="producto border rounded p-2 my-2 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
-          <img src="${p.imagen}" width="80" class="me-3 rounded">
+          <img src="${p.imagen}" width="80" class="me-3 rounded" style=cursor: pointer;" onclick="window.location.href='producto.html#${p.id}'">
           <div>
             <h5 class="mb-1">${p.nombre}</h5>
             <p class="mb-0">$${p.precio} x ${p.cantidad}</p>
+            <p class="mb-0 fw-bold text-success">Subtotal: $${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
           </div>
         </div>
         <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito('${p.id}')">X</button>
