@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Go!</title>
+    <link rel="manifest" href="./manifest.webmanifest"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="icon" href="./icons/icon-192.png">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Estilos para el boton Instalar App */
+        .thumb { height: 70px; object-fit: cover; border-radius: .35rem;}
+        .thumbs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;}
+        #btnInstall {
+        position: fixed; right: 16px; bottom: 16px;
+        padding: 12px 16px; border: 0; border-radius: 10px;
+        background: #122C4F; color: white; font-size: 14px; cursor: pointer;
+        box-shadow: 0 6px 18px rgba(0,0,0,.2); z-index: 9999;
+        }
+
+        :root {
+            --primary-blue: #122C4F;
+            --cream-bg: #ffffff;
+            --dark-text: #ffffff;
+        }
+
+        .py-4 {
+            padding-top: 3rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        .navbar {
+            background-color: #122C4F;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-text) !important;
+        }
+
+        .nav-link {
+            color: var(--dark-text) !important;
+            margin: 0 1rem;
+            font-weight: 500;
+        }
+
+        .navbar-nav-ft {
+            --bs-nav-link-padding-x: 0;
+            --bs-nav-link-padding-y: 0rem;
+            --bs-nav-link-font-weight: ;
+            --bs-nav-link-color: var(--bs-navbar-color);
+            --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
+            --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+            display: flex;
+            flex-direction: column;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+            
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            border: none;
+            color: white;
+            padding: .5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger {
+            border: 2px solid #891521;
+            background-color: #891521;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-blue);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #122C4F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-outline-danger-custom {
+            border: 2px solid #DC3545;
+            color: #DC3545;
+            background-color: transparent;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger-custom:hover {
+            background-color: #DC3545;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-box {
+            width: 120px;
+            height: 120px;
+            border: 3px solid var(--primary-blue);
+            border-radius: 12px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-card .card-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            border-radius: 6px;
+            border: none;
+        }
+
+        .modal-header {
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #CED4DA;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .nav-link .bi-cart {
+        font-size: 1.8rem;
+        color: white;
+        }
+
+        .nav-link .bi-cart:hover {
+        color: #ffc107;
+        }
+
+        /* Ajustes generales para tarjetas de productos */
+        .card-title {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-text {
+            font-size: 0.75rem !important;
+        }
+
+        .card-body {
+            padding: 0.6rem !important;
+        }
+
+        .price-text {
+            font-size: 1rem !important;
+            font-weight: bold;
+        }
+        /* Altura compacta para celulares */
+        .product-img {
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Altura mayor cuando la pantalla es grande */
+        @media (min-width: 768px) {
+            .product-img {
+                height: 180px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .product-img {
+                height: 220px;
+            }
+        }
+
+        .carousel-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Ajuste de texto del carrusel en móviles */
+        @media (max-width: 576px) {
+            .carousel-caption {
+                bottom: 50px !important;
+                padding: 0 10px !important;
+                width: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center;
+            }
+
+            .carousel-caption h5 {
+                font-size: 1.5rem !important;   
+                font-weight: 700;
+                line-height: 1.2;
+                text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+                
+            }
+
+            .carousel-caption p {
+                font-size: 1rem !important; 
+                font-weight: 600;
+                line-height: 1.2;
+                margin-bottom: 0;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            }
+        }
+
+        /* Ajuste ed texto del carrusel para escritorio */
+        @media (min-width: 992px) {
+            .carousel-caption {
+                bottom: 80px !important;
+                padding: 0 10px !important;
+                width: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center;
+            }
+
+            .carousel-caption h5 {
+                font-size: 3rem;
+                text-shadow: 2px 2px 7px rgba(0,0,0,0.7);
+            }
+
+            .carousel-caption p {
+                font-size: 1.5rem !important; 
+                font-weight: 600;
+                line-height: 1.2;
+                margin-bottom: 0;
+                text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) {
+            .carousel-img {
+                height: 260px;
+            }
+        }
+
+        /* Escritorio grande */
+        @media (min-width: 1200px) {
+            .carousel-img {
+                height: 320px;
+            }
+        }
+
+        /* Márgenes y estilo del carrusel - MÁS RECTANGULAR */
+        #heroCarousel {
+            margin: 2rem auto;
+            max-width: 95%;
+            border-radius: 15px; /* Menos redondeado */
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Ajustar altura de las imágenes para hacerlo más rectangular */
+        .carousel-img {
+            height: 280px; /* Más ancho que alto */
+            object-fit: cover;
+        }
+
+        #heroCarousel .carousel-inner img {
+            height: 280px !important; /* Forzar altura más baja */
+            object-fit: cover;
+        }
+
+        /* Responsive - Márgenes más pequeños en móvil */
+        @media (max-width: 768px) {
+            #heroCarousel {
+                margin: 1rem 1rem;
+                max-width: 98%;
+            }
+            
+            #heroCarousel .carousel-inner img {
+                height: 125px !important; /* Menos alto en móvil */
+            }
+        }
+
+
+        /* Desktop - Más rectangular (más ancho que alto) */
+        @media (min-width: 1200px) {
+            #heroCarousel {
+                margin: 3rem auto;
+                max-width: 92%; /* Un poco más ancho */
+            }
+            
+            #heroCarousel .carousel-inner img {
+                height: 250px !important; /* Altura controlada */
+            }
+        }
+
+        /* Ultra ancho (pantallas grandes) */
+        @media (min-width: 1600px) {
+            #heroCarousel .carousel-inner img {
+                height: 250px !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #122C4F;">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="index.html">
+                <img class="thumbs mx-4" src="./icons/icon-512.png" alt="LogoGadget-Go" width="100">
+            </a>
+                <a class="nav-link position-relative" href="carrito.html" style="font-size: 1.4rem;">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #fff7d4; color: #122C4F;">
+                        0
+                    </span>
+                </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" id="loginNavBtn"><a class="nav-link" href="#loginModal" data-bs-toggle="modal" style="font-size: 1.2rem;">Iniciar Sesion</a></li>
+                    <li class="nav-item" id="registerNavBtn"><a class="nav-link" href="#registerModal" data-bs-toggle="modal" style="font-size: 1.2rem;">Registrarse</a></li>
+                    <li class="nav-item" id="logoutBtn" style="display:none;"><a class="nav-link" href="#" style="font-size: 1.2rem;">Cerrar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#productos" style="font-size: 1.2rem;">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#modal" data-bs-toggle="modal" data-bs-target="#myModal" style="font-size: 1.2rem;">Contacto</a></li>
+                    <li class="nav-item" id="navInventario"><a class="nav-link" href="inventario2.html" style="font-size: 1.2rem;">Inventario</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--Inicio-->
+    <header id="inicio" class="mt-5 py-4" style="background-color: #ffffff;">
+        <div class="toast-container position-fixed top-0 end-0 p-3" id="toastZone"></div>
+    </header>
+    <div class="py-3">
+        <a class="ms-3" href="index.html">
+                    <button class="btn btn-primary">Volver</button>
+        </a>
+    </div>
+        <!-- Modal Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+        
+            <div class="modal-header" style="background:#122C4F; color:white;">
+                <h5 class="modal-title" id="loginLabel">Iniciar Sesión</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input id="user" type="text" class="form-control mb-3" placeholder="Usuario">
+
+                <input id="pass" type="password" class="form-control mb-3" placeholder="Contraseña">
+
+                <p id="error-msg" class="text-danger text-center"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button id="loginBtn" class="btn btn-primary w-100">Ingresar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Registro -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header" style="background:#122C4F; color:white;">
+                    <h5 class="modal-title" id="registerLabel">Crear Cuenta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input id="regEmail" type="email" class="form-control mb-3" placeholder="Correo">
+
+                    <input id="regPass" type="password" class="form-control mb-3" placeholder="Contraseña (mínimo 6 caracteres)">
+
+                    <p id="regError" class="text-danger text-center"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="registerBtn" class="btn btn-primary w-100">Registrarse</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+  // Recuperar carrito o inicializarlo vacío
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+  function guardarCarrito() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+  function agregarAlCarrito(producto) {
+    const item = carrito.find(p => p.id === producto.id);
+    if (item) {
+      item.cantidad++;
+    } else {
+      carrito.push(producto);
+    }
+    guardarCarrito();
+    actualizarCarrito();
+    }
+
+  function eliminarDelCarrito(id) {
+    carrito = carrito.filter(p => String(p.id) !== String(id));
+    guardarCarrito();
+    actualizarCarrito();
+    const alert = document.createElement('div');
+    showToast('<i class="fa-solid fa-cart-plus me-2"></i> Producto eliminado del carrito', "danger");
+    alert.className = "alert alert-danger position-fixed top-0 end-0 m-3";
+    alert.textContent = "Producto eliminado del carrito";
+    document.body.appendChild(alert);
+    setTimeout(() => alert.remove(), 2000);
+    }
+
+
+  function vaciarCarrito() {
+    carrito = [];
+    guardarCarrito();
+    actualizarCarrito();
+  }
+  // Actualizar vista del carrito en el modal y contador
+    function actualizarCarrito() {
+        const contenedor = document.getElementById('carrito-container');
+        const contador = document.getElementById('contador-carrito');
+        const totalElement = document.getElementById('total-carrito');
+        const btnProceder = document.getElementById('btnProcederPago');
+        
+        // Actualizar contador siempre
+        if (contador) {
+            contador.textContent = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+        }
+
+        // Si el contenedor no existe, solo actualizar contador y salir
+        if (!contenedor) {
+            console.log('⚠️ Contenedor del carrito no encontrado aún');
+            return;
+        }
+
+        if (carrito.length === 0) {
+            contenedor.innerHTML = '<p class="text-center text-muted py-4">Tu carrito está vacío</p>';
+            if (totalElement) totalElement.textContent = '$0.00';
+            if (btnProceder) btnProceder.disabled = true;
+            return;
+        }
+
+        if (btnProceder) btnProceder.disabled = false;
+
+        // Calcular total
+        const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+        
+        console.log('💰 Total calculado:', total);
+        
+        if (totalElement) {
+            totalElement.textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            console.log('✅ Total actualizado en el DOM');
+        } else {
+            console.log('⚠️ Elemento total-carrito no encontrado');
+        }
+
+        contenedor.innerHTML = carrito.map(p => `
+        <div class="producto border rounded p-2 my-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+            <img src="${p.imagen}" width="80" class="me-3 rounded" style="cursor: pointer;" onclick="window.location.href='producto.html#${p.id}'">
+            <div> 
+                <h5 class="mb-1">${p.nombre}</h5>
+                <p class="mb-0">$${Number(p.precio).toLocaleString('es-MX', {minimumFractionDigits: 2})} x ${p.cantidad}</p>
+                <p class="mb-0 fw-bold text-success">Subtotal: $${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
+            </div>
+            </div>
+            <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito('${p.id}')">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        `).join('');
+    }
+
+  // Mostrar carrito al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('🔄 DOM cargado, actualizando carrito...');
+        
+        // Actualizar solo el contador al inicio
+        const contador = document.getElementById('contador-carrito');
+        if (contador) {
+            contador.textContent = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+        }
+        
+        // Actualizar todo cuando la página esté completamente lista
+        setTimeout(() => {
+            actualizarCarrito();
+        }, 100);
+    });
+
+</script>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Contacto</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correo" placeholder="Tu correo electronico">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="mensaje" rows="3" placeholder="Tu mensaje"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" title="Enviar Formulario">Enviar</button>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal del Carrito -->
+    <div class="py-5 mx-3" id="carritoModal" tabindex="-1" aria-labelledby="carritoLabel">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="py-2 px-2" style="background-color: #122C4F; color: white; border-radius: 10px;">
+                    <h5 class="modal-title" id="carritoLabel">
+                        <i class="fas fa-shopping-cart me-2"></i>Tu Carrito
+                    </h5>
+                </div>
+            
+                <div class="modal-body" id="carrito-container">
+                    <p class="text-center text-muted">Cargando carrito...</p>
+                </div>
+
+                <!-- Total del carrito -->
+                <div class="px-4 py-2 bg-light border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Total:</h5>
+                        <h4 class="mb-0 text-success" id="total-carrito">$0.00</h4>
+                    </div>
+                </div>
+            
+                <div class="modal-footer py-3">
+                    <a href="index.html">
+                        <button type="button" class="btn btn-secondary mx-3">
+                            Seguir Comprando
+                        </button>
+                    </a>
+                    <button type="button" class="btn btn-primary" id="btnProcederPago" onclick="abrirCheckout()">
+                        <i class="fas fa-credit-card me-2"></i>Proceder al Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Checkout -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #122C4F; color: white;">
+                    <h5 class="modal-title" id="checkoutLabel">
+                        <i class="fas fa-shipping-fast me-2"></i>Datos de Envío
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+            
+                <div class="modal-body">
+                    <form id="checkoutForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombreEnvio" class="form-label">Nombre completo *</label>
+                                <input type="text" class="form-control" id="nombreEnvio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefonoEnvio" class="form-label">Teléfono *</label>
+                                <input type="tel" class="form-control" id="telefonoEnvio" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="direccionEnvio" class="form-label">Dirección completa *</label>
+                                <input type="text" class="form-control" id="direccionEnvio" placeholder="Calle, número, colonia" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ciudadEnvio" class="form-label">Ciudad *</label>
+                                <input type="text" class="form-control" id="ciudadEnvio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cpEnvio" class="form-label">Código Postal *</label>
+                                <input type="text" class="form-control" id="cpEnvio" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="notasEnvio" class="form-label">Notas adicionales (opcional)</label>
+                                <textarea class="form-control" id="notasEnvio" rows="2" placeholder="Referencias, instrucciones especiales, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Resumen del pedido -->
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <h6 class="mb-3"><i class="fas fa-receipt me-2"></i>Resumen del Pedido</h6>
+                            <div id="resumen-productos"></div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total a pagar:</strong>
+                                <strong class="text-success" id="total-checkout">$0.00</strong>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" form="checkoutForm" class="btn btn-success" id="btnConfirmarPedido">
+                        <i class="fas fa-check-circle me-2"></i>Confirmar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Footer-->
+    <!-- Firebase + Catalogo (modular) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, orderBy, setDoc, doc, addDoc, serverTimestamp, getDoc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBg9o3wVZoA26Aob2RnbVPV8vGv4GE44gs",
+            authDomain: "primer-proyecto-7b2f4.firebaseapp.com",
+            projectId: "primer-proyecto-7b2f4",
+            storageBucket: "primer-proyecto-7b2f4.firebasestorage.app",
+            messagingSenderId: "627220736817",
+            appId: "1:627220736817:web:a2eb4f187322c609f11e10"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // ========================================
+        // FUNCIÓN PARA OBTENER ROL
+        // ========================================
+        async function obtenerRolUsuario(uid) {
+            try {
+                const docRef = doc(db, "usuarios", uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    return docSnap.data().rol || "usuario";
+                } else {
+                    console.warn("Usuario no encontrado en Firestore");
+                    return "usuario";
+                }
+            } catch (error) {
+                console.error("Error obteniendo rol:", error);
+                return "usuario";
+            }
+        }
+
+        // ========================================
+        // AUTH STATE LISTENER
+        // ========================================
+        onAuthStateChanged(auth, async (user) => {
+            const btnLoginNav = document.getElementById('loginNavBtn');
+            const btnRegisterNav = document.getElementById('registerNavBtn');
+            const btnLogoutNav = document.getElementById('logoutBtn');
+            const navInventario = document.getElementById('navInventario');
+
+            if (user) {
+                console.log("Usuario autenticado:", user.email);
+                
+                const rol = await obtenerRolUsuario(user.uid);
+                console.log("Rol del usuario:", rol);
+                
+                localStorage.setItem('userRole', rol);
+                localStorage.setItem('userEmail', user.email);
+                localStorage.setItem('userId', user.uid);
+
+                if (btnLoginNav) btnLoginNav.style.display = 'none';
+                if (btnRegisterNav) btnRegisterNav.style.display = 'none';
+                if (btnLogoutNav) btnLogoutNav.style.display = 'block';
+
+            } else {
+                console.log("No hay usuario autenticado");
+                
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userId');
+
+                if (btnLoginNav) btnLoginNav.style.display = 'block';
+                if (btnRegisterNav) btnRegisterNav.style.display = 'block';
+                if (btnLogoutNav) btnLogoutNav.style.display = 'none';
+                if (navInventario) navInventario.style.display = 'none';
+            }
+        });
+
+        // ========================================
+        // LOGIN
+        // ========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('loginBtn');
+            const inputUser = document.getElementById('user');
+            const inputPass = document.getElementById('pass');
+            const errorMsg = document.getElementById('error-msg');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (loginBtn && inputUser && inputPass) {
+                loginBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const email = inputUser.value.trim();
+                    const pass = inputPass.value;
+
+                    if (!email || !pass) {
+                        if (errorMsg) errorMsg.textContent = 'Completa todos los campos';
+                        return;
+                    }
+
+                    try {
+                        await signInWithEmailAndPassword(auth, email, pass);
+                        if (errorMsg) errorMsg.textContent = '';
+                        const modalEl = document.getElementById('loginModal');
+                        if (modalEl) {
+                            const bs = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                            bs.hide();
+                        }
+                    } catch (e) {
+                        console.error('Login error:', e);
+                        if (errorMsg) errorMsg.textContent = 'Credenciales inválidas';
+                    }
+                });
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    try {
+                        await signOut(auth);
+                        showToast('Sesión cerrada', 'info');
+                    } catch (e) {
+                        console.error('Logout error', e);
+                    }
+                });
+            }
+        });
+
+        // ABRIR CHECKOUT
+        window.abrirCheckout = function() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            if (carrito.length === 0) {
+                showToast('El carrito está vacío', 'warning');
+                return;
+            }
+
+            const userEmail = localStorage.getItem('userEmail');
+            if (!userEmail) {
+                showToast('Debes iniciar sesión para realizar una compra', 'warning');
+                const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+                if (carritoModal) carritoModal.hide();
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+                return;
+            }
+
+            const resumen = document.getElementById('resumen-productos');
+            const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+            
+            resumen.innerHTML = carrito.map(p => `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>${p.nombre} x${p.cantidad}</span>
+                    <span>$${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('total-checkout').textContent = '$' + total.toLocaleString('es-MX', {minimumFractionDigits: 2});
+
+            const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+            if (carritoModal) carritoModal.hide();
+            
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            checkoutModal.show();
+        }
+
+        // CONFIRMAR PEDIDO
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnConfirmar = document.getElementById('btnConfirmarPedido');
+            btnConfirmar.disabled = true;
+            btnConfirmar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Procesando...';
+
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const userId = localStorage.getItem('userId');
+            const userEmail = localStorage.getItem('userEmail');
+
+            if (!userId || carrito.length === 0) {
+                showToast('Error: no hay usuario o carrito vacío', 'danger');
+                btnConfirmar.disabled = false;
+                btnConfirmar.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Pedido';
+                return;
+            }
+
+            const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+
+            const pedido = {
+                userId: userId,
+                userEmail: userEmail,
+                productos: carrito,
+                total: total,
+                estado: 'pendiente',
+                datosEnvio: {
+                    nombre: document.getElementById('nombreEnvio').value,
+                    telefono: document.getElementById('telefonoEnvio').value,
+                    direccion: document.getElementById('direccionEnvio').value,
+                    ciudad: document.getElementById('ciudadEnvio').value,
+                    codigoPostal: document.getElementById('cpEnvio').value,
+                    notas: document.getElementById('notasEnvio').value
+                },
+                fecha: serverTimestamp()
+            };
+
+            try {
+                const docRef = await addDoc(collection(db, 'pedidos'), pedido);
+                console.log('✅ Pedido creado:', docRef.id);
+
+                localStorage.removeItem('carrito');
+                actualizarCarrito();
+
+                const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+                if (checkoutModal) checkoutModal.hide();
+
+                document.getElementById('checkoutForm').reset();
+
+                showToast('¡Pedido realizado con éxito! 🎉', 'success');
+
+            } catch (error) {
+                console.error('Error creando pedido:', error);
+                showToast('Error al procesar el pedido: ' + error.message, 'danger');
+            } finally {
+                btnConfirmar.disabled = false;
+                btnConfirmar.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Pedido';
+            }
+        });
+    </script>
+    <script>
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sworker.js')
+                    .then(reg => console.log('SW registrado:', reg.scope))
+                    .catch(err => console.warn('SW fallo:', err));
+                });
+            }
+
+            // Manejo del "beforeinstallprompt" para mostrar botón de instalar
+            let deferredPrompt = null;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const btn = document.getElementById('btnInstall');
+                if (btn) btn.hidden = false;
+            });
+
+            // Click en el botón para lanzar el prompt
+            document.addEventListener('click', async (e) => {
+                if (e.target && e.target.id === 'btnInstall') {
+                    if (!deferredPrompt) return;
+                    e.target.disabled = true;
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('Instalación:', outcome);
+                    deferredPrompt = null;
+                    e.target.hidden = true;
+                }
+            });
+
+            // Evento cuando la app fue instalada
+            window.addEventListener('appinstalled', () => {
+                console.log('PWA instalada');
+                const btn = document.getElementById('btnInstall');
+                if (btn) btn.hidden = true;
+            });
+        </script>
+</body>
+</html>
