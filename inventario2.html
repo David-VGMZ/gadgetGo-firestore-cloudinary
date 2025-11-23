@@ -27,6 +27,7 @@
         }
         
         #btnInstall[hidden] { display: none; }
+
         /* Estilos para el encabezado */
         :root {
             --primary-blue: #122C4F;
@@ -160,95 +161,206 @@
             font-weight: 600;
         }
 
-        /* Estilos para tabs de categorías - MEJORADOS */
-        #categoriaTabs {
+        /* Ajustes generales para tarjetas de productos */
+
+        .card-title {
+                font-size: 1rem !important;
+                margin-bottom: 0.3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .card-title {
+                font-size: 0.9rem !important;
+                margin-bottom: 0.3rem;
+            }
+        }
+
+        .card-text {
+            font-size: 1rem !important;
+        }
+
+        @media (max-width: 768px) {
+            .card-text {
+                font-size: 0.85rem !important;
+            }
+        }
+
+        .card-body {
+            padding: 0.6rem !important;
+        }
+
+        .price-text {
+            font-size: 1rem !important;
+            font-weight: bold;
+        }
+
+        /* ESTILOS PARA SLIDER DE CATEGORÍAS */
+        .category-slider-wrapper {
+            position: relative;
             background-color: #d2d9e0;
-            padding: 1rem;
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        #categoriaTabs .nav-link {
-            color: #122C4F;
-            background-color: white;
-            font-weight: 600;
-            border: 2px solid #dee2e6;
-            margin: 0 0.5rem;
+        .category-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 3rem;
+            padding: 0.5rem 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: #122C4F #e9ecef;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+        }
+
+        @media (max-width: 768px) {
+            .category-slider {
+                display: flex;
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                gap: 0.75rem;
+                padding: 0.5rem 1rem;
+                scrollbar-width: thin;
+                scrollbar-color: #122C4F #e9ecef;
+                -webkit-overflow-scrolling: touch;
+                cursor: grab;
+            }
+        }
+
+        .category-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .category-slider::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 10px;
+        }
+
+        .category-slider::-webkit-scrollbar-thumb {
+            background: #122C4F;
+            border-radius: 10px;
+        }
+
+        .category-btn {
+            flex: 0 0 auto;
+            min-width: 160px;
             padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: #122C4F;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
+            white-space: nowrap;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        #categoriaTabs .nav-link:hover {
+        .category-btn:hover {
             background-color: #e3f2fd;
             border-color: #122C4F;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(18, 44, 79, 0.2);
         }
 
-        #categoriaTabs .nav-link.active {
+        .category-btn.active {
             background-color: #122C4F;
             color: white;
             border-color: #122C4F;
             box-shadow: 0 4px 12px rgba(18, 44, 79, 0.4);
         }
 
-        /* Badge con contador de productos */
+        .category-btn i {
+            color: inherit;
+        }
+
         .category-badge {
             background-color: #122C4F;
             color: white;
             border-radius: 12px;
             padding: 3px 10px;
-            margin-left: 8px;
             font-size: 0.85rem;
             font-weight: bold;
+            margin-left: 8px;
         }
 
-        .nav-link.active .category-badge {
+        .category-btn.active .category-badge {
             background-color: #FBF9E4;
             color: #122C4F;
         }
 
-        /* Responsive para móviles */
-        @media (max-width: 768px) {
-            #categoriaTabs {
-                padding: 0.5rem;
-            }
-            
-            #categoriaTabs .nav-link {
-                margin: 0.25rem;
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .category-badge {
-                padding: 2px 6px;
-                font-size: 0.75rem;
-            }
+        /* Botones de navegación */
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            border: 2px solid #122C4F;
+            color: #122C4F;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
         }
 
-        /* FORZAR estilos de tabs */
-        #categoriaTabs .nav-link {
-            color: #122C4F !important;
-            background-color: white !important;
+        .slider-nav-btn:hover {
+            background-color: #122C4F;
+            color: white;
         }
 
-        #categoriaTabs .nav-link:hover {
-            background-color: #e3f2fd !important;
-            color: #122C4F !important;
+        .slider-nav-btn.prev {
+            left: -20px;
         }
 
-        #categoriaTabs .nav-link.active {
-            background-color: #122C4F !important;
-            color: white !important;
+        .slider-nav-btn.next {
+            right: -20px;
         }
 
-        #categoriaTabs .nav-link.active i {
-            color: white !important;
+        /* Botones de navegación */
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            border: 2px solid #122C4F;
+            color: #122C4F;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
         }
 
-        #categoriaTabs .nav-link i {
-            color: #122C4F !important;
+        .slider-nav-btn:hover {
+            background-color: #122C4F;
+            color: white;
+        }
+
+        .slider-nav-btn.prev {
+            left: -20px;
+        }
+
+        .slider-nav-btn.next {
+            right: -20px;
         }
 
     </style>
@@ -258,7 +370,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #122C4F;">
         <div class="container-fluid">
             <a href="index.html">
-                <img src="./icons/icon-512.png" alt="LogoGadget-Go" width="100">
+                <img src="./icons/icon-512.png" alt="LogoGadget-Go" width="80">
             </a>
             <h2 class="px-5 text-white" style="color: #122C4F; font-weight: 700;">Inventario</h2>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -273,11 +385,11 @@
             </div>
         </div>
     </nav>
-    <header id="inicio" class="text-center py-5" style="background-color: #FBF9E4;">
-        <div class="container"></div>
+    <header id="inicio" class="text-center py-5" style="background-color: #fff6e0;">
+        
     </header>
     
-    <section class="py-5" style="background-color: #FBF9E4;">
+    <section class="py-4" style="background-color: #FBF9E4;">
         <div class="container">
             <div class="text-center mb-4">
                 <h3 class="display-1 mb-3" style="color: #122C4F; font-weight: 400;"><strong>Gestion de Productos</strong></h3>
@@ -291,38 +403,44 @@
                 </button>
             </div>
         </section>
-            <!-- Tabs de Categorías -->
-            <ul class="nav nav-pills justify-content-center mb-4" id="categoriaTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="tab-todas" data-categoria="todas" type="button">
-                        <i class="fas fa-th me-2"></i>Todas
+            <!-- Slider de Categorías -->
+            <div class="category-slider-wrapper col-md-12">
+                <div class="category-slider" id="categorySlider">
+                    <button class="category-btn active" data-categoria="todas">
+                        <i class="fas fa-th"></i>
+                        <span>Todas</span>
+                        <span class="category-badge">0</span>
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tab-cel" data-categoria="cel" type="button">
-                        <i class="fas fa-mobile-alt me-2"></i>Celulares
+                    
+                    <button class="category-btn" data-categoria="cel">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Celulares</span>
+                        <span class="category-badge">0</span>
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tab-computadoras" data-categoria="computadoras" type="button">
-                        <i class="fas fa-desktop me-2"></i>Equipos de Cómputo
+                    
+                    <button class="category-btn" data-categoria="computadoras">
+                        <i class="fas fa-desktop"></i>
+                        <span>Equipos de Cómputo</span>
+                        <span class="category-badge">0</span>
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tab-cables" data-categoria="cables" type="button">
-                        <i class="fas fa-laptop me-2"></i>Cableado
+                    
+                    <button class="category-btn" data-categoria="cables">
+                        <i class="fas fa-plug"></i>
+                        <span>Cableado</span>
+                        <span class="category-badge">0</span>
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="tab-audio" data-categoria="audio" type="button">
-                        <i class="fas fa-laptop me-2"></i>Audio
+                    
+                    <button class="category-btn" data-categoria="audio">
+                        <i class="fas fa-headphones"></i>
+                        <span>Audio</span>
+                        <span class="category-badge">0</span>
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
 
             <!--Contenedor para mostrar los productos-->
             <section id="productos" class="container my-5">
-                <div id="productsContainer" class="row g-4"></div>
+                <div id="productsContainer" class="row"></div>
             </section>
         </div>
     
@@ -418,7 +536,7 @@
 
         if (userRole !== 'admin') {
             alert('Acceso denegado. Solo administradores pueden acceder al inventario.');
-            window.location.href = 'inicioGG.html';
+            window.location.href = 'index.html';
         }
         console.log(`Acceso permitido - Admin: ${userEmail}`);
 
@@ -640,18 +758,108 @@
 
         // BORRAR PRODUCTO
         async function deleteProduct(id) {
-            
             try {
+                // Solicitar confirmación al usuario
+                const confirmar = confirm('¿Estás segur@ de que deseas eliminar este producto? \n\n' +
+                    'Esta acción es permanente y no se puede deshacer.'
+                );
                 
-                const docRef = doc(db, "productos", id);             
-                await deleteDoc(docRef);
-                showToast("Producto eliminado", "danger");
+                if (!confirmar) {
+                    return;
+                }
+                
+                const documentoRef = doc(db, "productos", id);
+                await deleteDoc(documentoRef);
+                showToast("Producto eliminado correctamente", "danger");
                 await loadProducts();
                 
             } catch (error) {
+                // Manejar errores
+                console.error("Error al eliminar producto:", error);
                 showToast("Error al eliminar: " + error.message, "danger");
             }
         }
+
+        // FUNCIÓN: Eliminar TODOS los productos de Firestore
+        async function deleteAllProducts() {
+
+            // Verificar que existan productos para eliminar
+            if (!productos || productos.length === 0) {
+                showToast("ℹNo hay productos para eliminar", "info");
+                return;
+            }
+
+            // Guardar la cantidad total antes de eliminar
+            const cantidadTotal = productos.length;
+
+            // PASO 2: PRIMERA CONFIRMACIÓN
+            const primeraConfirmacion = confirm(
+                'ADVERTENCIA DE ELIMINACIÓN MASIVA \n\n' + '¿Estás completamente segur@ de eliminar TODOS los productos?\n\n' +
+                'Total de productos: ' + cantidadTotal + '\n' + 'Se eliminarán permanentemente de Firestore\n\n' +
+                'ESTA ACCIÓN NO SE PUEDE DESHACER'
+            );
+            
+            // Si cancela en la primera confirmación
+            if (!primeraConfirmacion) {
+                showToast("Operación cancelada - Productos seguros", "info");
+                return;
+            }
+
+            // PASO 3: SEGUNDA CONFIRMACIÓN (Seguridad extra)          
+            const segundaConfirmacion = confirm(
+                'ÚLTIMA CONFIRMACIÓN \n\n' + 'Esta es tu última oportunidad para cancelar. \n\n' + 'Se eliminarán ' + cantidadTotal + ' productos de la base de datos \n' +
+                'Los cambios se aplicarán en Firestore inmediatamente \n\n' + '¿Proceder con la eliminación total?'
+            );
+            
+            // Si cancela en la segunda confirmación
+            if (!segundaConfirmacion) {
+                showToast("Operación cancelada - Productos seguros", "info");
+                return;
+            }
+
+            // PASO 4: PROCESO DE ELIMINACIÓN          
+            try {
+                // Notificar inicio del proceso
+                showToast("Eliminando " + cantidadTotal + " productos de Firestore...", "warning");
+                
+                // Crear un array de promesas de eliminación
+                // Cada promesa representa la eliminación de UN producto
+                const promesasDeEliminacion = productos.map(producto => {
+                    // Crear referencia al documento en Firestore
+                    const documentoRef = doc(db, "productos", producto.id);
+                    
+                    // Retornar la promesa de eliminación (no se ejecuta aún)
+                    return deleteDoc(documentoRef);
+                });
+
+                // Ejecutar TODAS las eliminaciones en PARALELO
+                // Promise.all() espera a que todas las promesas se completen
+                await Promise.all(promesasDeEliminacion);
+                
+                // PASO 5: CONFIRMACIÓN DE ÉXITO
+                // Construir mensaje de éxito con plural/singular correcto
+                const mensaje = cantidadTotal === 1 ? '1 producto eliminado exitosamente de Firestore' : '' + cantidadTotal +
+                    ' productos eliminados exitosamente de Firestore';
+                
+                showToast(mensaje, "success");
+                
+                // Recargar la lista de productos desde Firestore (ahora vacía)
+                await loadProducts();
+                
+            } catch (error) {
+                // ==========================================
+                // MANEJO DE ERRORES
+                // ==========================================
+                
+                console.error("Error durante la eliminación masiva:", error);
+                
+                showToast("Error al eliminar productos: " + error.message + "\n\n" + "Por favor, intenta nuevamente o contacta al administrador.","danger");
+            }
+        }
+
+        // CONECTAR EL BOTÓN AL EVENT LISTENER
+        document.getElementById('clearAll').addEventListener('click', deleteAllProducts);
+        
 
         // MOSTRAR PRODUCTOS POR CATEGORÍA
         let categoriaActual = 'todas';
@@ -704,19 +912,19 @@
                 }
 
                 const card = document.createElement("div");
-                card.className = "col-12 col-md-3 mb-4";
+                card.className = "col-6 col-md-3 mb-4";
                 
                 card.innerHTML = `
                     <div class="card shadow-sm h-100">
                         <img src="${imgSrc}" class="card-img-top" style="object-fit:cover;" alt="${p.nombre}">
                         <div class="card-body">
-                            <h5 class="mb-2">${p.nombre}</h5>
-                            <p class="text-muted mb-1"><small>${p.descripcion || "Sin descripción"}</small></p>
-                            <p class="mb-1"><strong>Modelo:</strong> ${p.modelo || 'N/A'}</p>
-                            <p class="mb-1"><strong>Categoría:</strong> <span class="badge bg-secondary">${obtenerNombreCategoria(p.categoria)}</span></p>
-                            <p class="mb-1"><strong>Estado:</strong> <span class="badge bg-primary">${p.estado || 'N/A'}</span></p>
-                            <p class="mb-2"><strong>Precio:</strong> <span class="text-success fw-bold">$${currencyMX(p.precio)}</span></p>
-                            <p class="mb-3"><strong>Stock:</strong> ${p.stock || '0'} unidades</p>
+                            <h5 class="card-title mb-2">${p.nombre}</h5>
+                            <p class="text-muted mb-1 card-text"><small>${p.descripcion || "Sin descripción"}</small></p>
+                            <p class="mb-1 card-text"><strong>Modelo:</strong> ${p.modelo || 'N/A'}</p>
+                            <p class="mb-1 card-text"><strong>Categoría:</strong> <span class="badge bg-secondary">${obtenerNombreCategoria(p.categoria)}</span></p>
+                            <p class="mb-1 card-text"><strong>Estado:</strong> <span class="badge bg-primary">${p.estado || 'N/A'}</span></p>
+                            <p class="mb-2"><strong class="card-text">Precio:</strong> <span class="text-success fw-bold">$${currencyMX(p.precio)}</span></p>
+                            <p class="mb-3 card-text"><strong>Stock:</strong> ${p.stock || '0'} unidades</p>
                             
                             <div class="d-flex gap-2">
                                 <button type="button" class="btn btn-primary btn-sm flex-fill edit-btn" data-id="${p.id}">
@@ -787,6 +995,7 @@
             });
         }
 
+        // Funcion para comprimir imagenes de los productos
         // Lee y COMPRIME múltiples imágenes
         function readFilesAsDataURLs(fileList, maxSize = 512) {
             const files = Array.from(fileList || []);
@@ -847,28 +1056,66 @@
             });
         }
 
-        /* -----------------------------
-        EVENT LISTENERS PARA TABS
+       /* -----------------------------
+        EVENT LISTENERS PARA SLIDER DE CATEGORÍAS
         -----------------------------*/
-        document.querySelectorAll('#categoriaTabs button').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const slider = document.getElementById('categorySlider');
+
+        // Click en botones de categoría
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
                 // Remover active de todos
-                document.querySelectorAll('#categoriaTabs button').forEach(b => {
-                    b.classList.remove('active');
-                });
+                categoryButtons.forEach(b => b.classList.remove('active'));
                 
-                // Agregar active al clickeado
-                e.currentTarget.classList.add('active');
+                // Agregar active al click
+                this.classList.add('active');
                 
                 // Obtener categoría
-                const categoria = e.currentTarget.getAttribute('data-categoria');
+                const categoria = this.getAttribute('data-categoria');
                 categoriaActual = categoria;
+                
+                // Autocentrar el botón seleccionado
+                this.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
                 
                 // Renderizar productos filtrados
                 renderProducts(categoria);
             });
         });
 
+        // Soporte para arrastrar con mouse (escritorio)
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
         // INICIO
         loadProducts();
 
