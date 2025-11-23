@@ -1,4 +1,4 @@
-const CACHE_NAME = 'proyectos-pwa-v9';
+const CACHE_NAME = 'proyectos-pwa-v10';
 const PRECACHE_URLS = [
   './',
   './index.html',
