@@ -1,4 +1,4 @@
-const CACHE_NAME = 'proyectos-pwa-v10';
+const CACHE_NAME = 'gadget-go-v0.1';
 const PRECACHE_URLS = [
   './',
   './index.html',
