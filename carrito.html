@@ -380,7 +380,7 @@
     </header>
     <div class="py-3">
         <a class="ms-3" href="index.html">
-                    <button class="btn btn-primary">Volver</button>
+            <button class="btn btn-primary">Volver</button>
         </a>
     </div>
         <!-- Modal Login -->
@@ -544,6 +544,32 @@
         }, 100);
     });
 
+    function showToast(msg, type = "success") {
+        const container = document.getElementById("toastZone");
+
+        const toastEl = document.createElement("div");
+        toastEl.className = `toast align-items-center text-bg-${type} border-0`;
+        toastEl.setAttribute("role", "alert");
+        toastEl.setAttribute("aria-live", "assertive");
+        toastEl.setAttribute("aria-atomic", "true");
+
+        toastEl.innerHTML = `
+            <div class="d-flex my-5">
+                <div class="toast-body">${msg}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+
+        container.appendChild(toastEl);
+
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+
+        // remover después de 4 segundos
+        setTimeout(() => toastEl.remove(), 2000);
+    }
+    
 </script>
 
     <!-- The Modal -->
@@ -584,7 +610,7 @@
         </div>
     </div>
     <!-- Modal del Carrito -->
-    <div class="py-5 mx-3" id="carritoModal" tabindex="-1" aria-labelledby="carritoLabel">
+    <div class="mx-3" id="carritoModal" tabindex="-1" aria-labelledby="carritoLabel">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="py-2 px-2" style="background-color: #122C4F; color: white; border-radius: 10px;">
