@@ -1,10 +1,10 @@
-const CACHE_NAME = 'proyectos-pwa-v8';
+const CACHE_NAME = 'proyectos-pwa-v9';
 const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
+  './icons/icon-app-192.png',
+  './icons/icon-app-512.png',
 ];
 
 // Instalar SW
