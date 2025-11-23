@@ -199,14 +199,15 @@
         </div>
     </nav>
 
-    <header id="inicio" class="py-5">
-        <div class="container-fluid py-5 mt-5 mb-4">
+    <header id="inicio" class="mt-5 py-4" style="background-color: #ffffff;">
+        <div class="toast-container position-fixed top-0 end-0 p-3" id="toastZone"></div>
+    </header>
+
+    <div class="pt-4 pb-3 mt-4">
             <a class="ms-3" href="index.html">
                 <button class="btn btn-primary">Volver</button>
             </a>
         </div>
-        <div class="toast-container position-fixed top-0 end-0 p-3" id="toastZone"></div>
-    </header>
     
 <script>
   // Recuperar carrito o inicializarlo vacío
@@ -248,11 +249,20 @@
     actualizarCarrito();
   }
 
-  // Actualizar vista del carrito en el modal y contador
+ // Actualizar vista del carrito en el modal y contador
   function actualizarCarrito() {
     const contenedor = document.getElementById('carrito-container');
     const contador = document.getElementById('contador-carrito');
     contador.textContent = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+
+    // Escuchar cuando se abre el modal del carrito
+    const carritoModal = document.getElementById('carritoModal');
+    if (carritoModal) {
+        carritoModal.addEventListener('shown.bs.modal', function () {
+
+                actualizarCarrito();
+        });
+    }
 
     if (carrito.length === 0) {
       contenedor.innerHTML = '<p class="text-center text-muted">Tu carrito está vacío</p>';
@@ -262,11 +272,10 @@
     contenedor.innerHTML = carrito.map(p => `
       <div class="producto border rounded p-2 my-2 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
-          <img src="${p.imagen}" width="80" class="me-3 rounded" style=cursor: pointer;" onclick="window.location.href='producto.html#${p.id}'">
-          <div>
+          <img src="${p.imagen}" width="80" class="me-3 rounded">
+          <div> 
             <h5 class="mb-1">${p.nombre}</h5>
             <p class="mb-0">$${p.precio} x ${p.cantidad}</p>
-            <p class="mb-0 fw-bold text-success">Subtotal: $${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
           </div>
         </div>
         <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito('${p.id}')">X</button>
@@ -304,8 +313,8 @@
     }
 </script>
 
-    <section id="productos" class="container my-5">
-        <div class="container my-5" id="producto-container">
+    <section id="productos" class="container my-3">
+        <div class="container" id="producto-container">
             <p class="text-center text-muted">Cargando producto...</p>
         </div>
     </section>
@@ -352,17 +361,97 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #122C4F; color: white;">
-                    <h5 class="modal-title" id="carritoLabel">Tu Carrito</h5>
+                    <h5 class="modal-title" id="carritoLabel">
+                        <i class="fas fa-shopping-cart me-2"></i>Tu Carrito
+                    </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
             
                 <div class="modal-body" id="carrito-container">
                     <p class="text-center text-muted">Cargando carrito...</p>
                 </div>
+
+                <!-- Total del carrito -->
+                <div class="px-4 py-2 bg-light border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Total:</h5>
+                        <h2 class="mb-0 text-success" id="total-carrito">$0.00</h2>
+                    </div>
+                </div>
             
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" onclick="vaciarCarrito()">Vaciar carrito</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Seguir comprando</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="vaciarCarrito()">
+                        <i class="fas fa-trash me-2"></i>Vaciar Carrito
+                    </button>
+                    <a href="carrito.html">
+                        <button type="button" class="btn btn-secondary">
+                            Ir al Carrito
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Checkout -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #122C4F; color: white;">
+                    <h5 class="modal-title" id="checkoutLabel">
+                        <i class="fas fa-shipping-fast me-2"></i>Datos de Envío
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+            
+                <div class="modal-body">
+                    <form id="checkoutForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombreEnvio" class="form-label">Nombre completo *</label>
+                                <input type="text" class="form-control" id="nombreEnvio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefonoEnvio" class="form-label">Teléfono *</label>
+                                <input type="tel" class="form-control" id="telefonoEnvio" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="direccionEnvio" class="form-label">Dirección completa *</label>
+                                <input type="text" class="form-control" id="direccionEnvio" placeholder="Calle, número, colonia" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ciudadEnvio" class="form-label">Ciudad *</label>
+                                <input type="text" class="form-control" id="ciudadEnvio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cpEnvio" class="form-label">Código Postal *</label>
+                                <input type="text" class="form-control" id="cpEnvio" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="notasEnvio" class="form-label">Notas adicionales (opcional)</label>
+                                <textarea class="form-control" id="notasEnvio" rows="2" placeholder="Referencias, instrucciones especiales, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Resumen del pedido -->
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <h6 class="mb-3"><i class="fas fa-receipt me-2"></i>Resumen del Pedido</h6>
+                            <div id="resumen-productos"></div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total a pagar:</strong>
+                                <strong class="text-success" id="total-checkout">$0.00</strong>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" form="checkoutForm" class="btn btn-success" id="btnConfirmarPedido">
+                        <i class="fas fa-check-circle me-2"></i>Confirmar Pedido
+                    </button>
                 </div>
             </div>
         </div>
@@ -490,6 +579,159 @@
             window.history.back();
         });
         */
+
+        // ACTUALIZAR CARRITO
+        window.actualizarCarrito = function() {
+            const contenedor = document.getElementById('carrito-container');
+            const contador = document.getElementById('contador-carrito');
+            const totalElement = document.getElementById('total-carrito');
+            const btnProceder = document.getElementById('btnProcederPago');
+            
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            contador.textContent = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+
+            if (carrito.length === 0) {
+                contenedor.innerHTML = '<p class="text-center text-muted py-4">Tu carrito está vacío</p>';
+                if (totalElement) totalElement.textContent = '$0.00';
+                if (btnProceder) btnProceder.disabled = true;
+                return;
+            }
+
+            if (btnProceder) btnProceder.disabled = false;
+
+            const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+            if (totalElement) {
+                totalElement.textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            }
+
+            contenedor.innerHTML = carrito.map(p => `
+                <div class="producto border rounded p-3 my-2 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <img src="${p.imagen}" width="80" height="80" class="me-3 rounded" style="object-fit: cover; cursor: pointer;" onclick="window.location.href='producto.html#${p.id}'">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">${p.nombre}</h6>
+                            <p class="mb-0 text-muted">$${Number(p.precio).toLocaleString('es-MX', {minimumFractionDigits: 2})} x ${p.cantidad} Pieza(s)</p>
+                            <p class="mb-0 fw-bold text-success">Subtotal: $${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito('${p.id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // ABRIR CHECKOUT
+        window.abrirCheckout = function() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            if (carrito.length === 0) {
+                showToast('El carrito está vacío', 'warning');
+                return;
+            }
+
+            const userEmail = localStorage.getItem('userEmail');
+            if (!userEmail) {
+                showToast('Debes iniciar sesión para realizar una compra', 'warning');
+                const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+                if (carritoModal) carritoModal.hide();
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+                return;
+            }
+
+            const resumen = document.getElementById('resumen-productos');
+            const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+            
+            resumen.innerHTML = carrito.map(p => `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>${p.nombre} x${p.cantidad}</span>
+                    <span>$${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('total-checkout').textContent = '$' + total.toLocaleString('es-MX', {minimumFractionDigits: 2});
+
+            const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+            if (carritoModal) carritoModal.hide();
+            
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            checkoutModal.show();
+        }
+
+              // CONFIRMAR PEDIDO
+        function inicializarCheckout() {
+            const checkoutForm = document.getElementById('checkoutForm');
+            
+            if (!checkoutForm) {
+                console.warn('Formulario checkoutForm no encontrado aún');
+                return;
+            }
+            
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const btnConfirmar = document.getElementById('btnConfirmarPedido');
+                btnConfirmar.disabled = true;
+                btnConfirmar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Procesando...';
+
+                const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                const userId = localStorage.getItem('userId');
+                const userEmail = localStorage.getItem('userEmail');
+
+                if (!userId || carrito.length === 0) {
+                    showToast('Error: no hay usuario o carrito vacío', 'danger');
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Pedido';
+                    return;
+                }
+
+                const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+
+                const pedido = {
+                    userId: userId,
+                    userEmail: userEmail,
+                    productos: carrito,
+                    total: total,
+                    estado: 'pendiente',
+                    datosEnvio: {
+                        nombre: document.getElementById('nombreEnvio').value,
+                        telefono: document.getElementById('telefonoEnvio').value,
+                        direccion: document.getElementById('direccionEnvio').value,
+                        ciudad: document.getElementById('ciudadEnvio').value,
+                        codigoPostal: document.getElementById('cpEnvio').value,
+                        notas: document.getElementById('notasEnvio').value
+                    },
+                    fecha: serverTimestamp()
+                };
+
+                try {
+                    const docRef = await addDoc(collection(db, 'pedidos'), pedido);
+                    console.log('✅ Pedido creado:', docRef.id);
+
+                    localStorage.removeItem('carrito');
+                    actualizarCarrito();
+
+                    const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+                    if (checkoutModal) checkoutModal.hide();
+
+                    document.getElementById('checkoutForm').reset();
+
+                    showToast('¡Pedido realizado con éxito!', 'success');
+
+                } catch (error) {
+                    console.error('Error creando pedido:', error);
+                    showToast('Error al procesar el pedido: ' + error.message, 'danger');
+                } finally {
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Pedido';
+                }
+            });
+            
+            console.log('Event listener del checkout agregado correctamente');
+        }
+
     </script>
 </body>
 </html>
