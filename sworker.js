@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gadget-go-v0.2';
+const CACHE_NAME = 'gadget-go-v0.21';
 const PRECACHE_URLS = [
   './',
   './index.html',
