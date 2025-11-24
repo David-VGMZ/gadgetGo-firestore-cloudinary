@@ -3,7 +3,7 @@
   "short_name": "GadgetGo",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#122C4F",
   "theme_color": "#122C4F",
   "icons": [
     {
