@@ -14,11 +14,105 @@
         /* Estilos para el boton Instalar App */
         .thumb { height: 70px; object-fit: cover; border-radius: .35rem;}
         .thumbs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;}
+
         #btnInstall {
-        position: fixed; right: 16px; bottom: 16px;
-        padding: 12px 16px; border: 0; border-radius: 10px;
-        background: #122C4F; color: white; font-size: 14px; cursor: pointer;
-        box-shadow: 0 6px 18px rgba(0,0,0,.2); z-index: 9999;
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            padding: 12px 16px;
+            border: 0;
+            border-radius: 10px;
+            background: #2d5d9b;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,.2);
+            z-index: 9999;
+            transition: all 0.3s ease;
+        }
+
+        #btnInstall:hover {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            padding: 12px 16px;
+            border: 0;
+            border-radius: 10px;
+            background: #1c477e;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0,0,0,.2);
+            z-index: 9999;
+            transition: all 0.3s ease;
+        }
+
+            #btnUp {
+                position: fixed;
+                right: 90rem;
+                bottom: 16px;
+                padding: 8px 8px;
+                border: 0;
+                border-radius: 20px;
+                background: #2d5d9b;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
+
+            #btnUp:hover {
+                position: fixed;
+                right: 90rem;
+                bottom: 16px;
+                padding: 8px 8px;
+                border: 0;
+                border-radius: 20px;
+                background: #1b4986;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
+
+        @media (max-width: 576px) { 
+            #btnUp {
+                    position: fixed;
+                    right: 20rem;
+                    bottom: 16px;
+                    padding: 8px 8px;
+                    border: 0;
+                    border-radius: 20px;
+                    background: #2d5d9b;
+                    color: white;
+                    font-size: 14px;
+                    cursor: pointer;
+                    box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                    z-index: 9999;
+                    transition: all 0.3s ease;
+                }
+            }
+
+        @media (max-width: 576px) { 
+            #btnUp:hover {
+                position: fixed;
+                right: 320px;
+                bottom: 16px;
+                padding: 8px 8px;
+                border: 0;
+                border-radius: 10px;
+                background: #1b4986;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
         }
 
         :root {
@@ -51,8 +145,8 @@
         }
 
         .navbar-nav-ft {
-            --bs-nav-link-padding-x: 0;
-            --bs-nav-link-padding-y: 0rem;
+            --bs-nav-link-padding-x: 0rem;
+            --bs-nav-link-padding-y: 0.2rem;
             --bs-nav-link-font-weight: ;
             --bs-nav-link-color: var(--bs-navbar-color);
             --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
@@ -62,8 +156,25 @@
             padding-left: 0;
             margin-bottom: 0;
             list-style: none;
+            font-size: 16px;
         }
-            
+
+        @media (max-width: 576px) {        
+                .navbar-nav-ft {
+                --bs-nav-link-padding-x: 0;
+                --bs-nav-link-padding-y: 0rem;
+                --bs-nav-link-font-weight: ;
+                --bs-nav-link-color: var(--bs-navbar-color);
+                --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
+                --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+                display: flex;
+                flex-direction: column;
+                padding-left: 0;
+                margin-bottom: 0;
+                list-style: none;
+                font-size: 14px;
+            }
+        }
 
         .hero-section {
             text-align: center;
@@ -715,10 +826,6 @@
                 width: 92%;
             }
             
-            .slider-slide img {
-                height: 300px;
-            }
-            
             .slider-caption {
                 bottom: 60px;
             }
@@ -750,7 +857,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a href="index.html">
-                <img class="thumbs mx-4" src="./icons/icon-512.png" alt="LogoGadget-Go" width="80">
+                <img class="thumbs mx-4" src="./img/Logo-GadgetGo-512x512-v2.png" alt="LogoGadget-Go" width="80">
             </a>
                 <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#carritoModal" style="font-size: 1.4rem;">
                     <i class="fa-solid fa-cart-shopping"></i>
@@ -771,7 +878,7 @@
         </div>
     </nav>
     <!--Inicio-->
-    <header id="inicio" class=" pt-5 pb-0" style="background-color: #fff6e0;">
+    <header id="inicio" class=" pt-5 pb-0">
         <div class="my-2 py-4">
         <!-- Slider Deslizable -->
         <div class="slider-container">
@@ -909,6 +1016,10 @@
 
   function guardarCarrito() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
+    // Tambien guardar en IndexedDB
+    guardarCarritoOffline(carrito).catch(err => {
+        console.error('Error guardando carrito en IndexedDB:', err);
+        });
     }
 
   function agregarAlCarrito(producto) {
@@ -1006,7 +1117,7 @@
 </script>
 
     <section id="productos" class="container my-5 ab-5" style="margin-bottom: 4rem;">
-        <div id="productos-container" class="row g-3 mb-3" style="background-color: #f0f0f0; border-radius: 16px;"></div>
+        <div id="productos-container" class="row g-3 mb-3" style="border-radius: 16px;"></div>
     </section>
     
     <!-- Modal Contacto -->
@@ -1145,19 +1256,20 @@
     </div>
     <!--Footer-->
     <footer class="text-white py-3" style="background-color: #122C4F;">
-        <p class="text-center">&copy; 2025 Gadget Go - Todos los derechos reservados</p>
         <!--Politicas-->
-
             <ul class="navbar-nav-ft ms-auto">
-                <li class="nav-item" id="loginNavBtn"><a class="nav-link" href="#" style="font-size: 14px;">Politicas de Devolucion</a></li>
-                <li class="nav-item" id="loginNavBtn"><a class="nav-link" href="#" style="font-size: 14px;">Politicas de Uso</a></li>
+                <li class="nav-item text-center"><a class="nav-link" href="politicas-devolución.html">Politicas de Devolucion</a></li>
+                <li class="nav-item text-center"><a class="nav-link" href="#">Politicas de Uso</a></li>
+                <li class="nav-item text-center"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
             </ul>
+        <p class="text-center mt-3">&copy; <strong>Gadget Go</strong> - Todos los derechos reservados</p>
 
     </footer>
+    <script src="./db.js"></script>
     <!-- Firebase -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-        import { getFirestore, collection, getDocs, query, orderBy, setDoc, doc, addDoc, serverTimestamp, getDoc, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getFirestore, collection, getDocs, query, orderBy, setDoc, doc, addDoc, serverTimestamp, getDoc, where, enableIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
 
         // Firebase Config
@@ -1173,6 +1285,22 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+
+        // ====================================
+        // AGREGADO AL INICIO: Inicializar IndexedDB
+        let dbReady = false;
+
+        // Inicializar IndexedDB al cargar la página
+        (async function inicializarDB() {
+            try {
+                await initDB();
+                dbReady = true;
+                console.log('✅ IndexedDB lista para usar');
+            } catch (error) {
+                console.error('❌ Error inicializando IndexedDB:', error);
+                dbReady = false;
+            }
+        })();
 
         // FUNCIÓN PARA OBTENER ROL
         async function obtenerRolUsuario(uid) {
@@ -1238,7 +1366,7 @@
             } else {
                 console.log("No hay usuario autenticado");
                 
-                // ✅ LIMPIAR LA BANDERA AL CERRAR SESIÓN
+                // LIMPIAR LA BANDERA AL CERRAR SESIÓN
                 sessionStorage.removeItem('loginToastShown');
                 
                 localStorage.removeItem('userRole');
@@ -1350,19 +1478,83 @@
 
         async function cargarProductos(){
             productosSection.innerHTML = '<p class="text-center">Cargando productos...</p>';
+
+            // ⭐ AGREGADO: Verificar conexión PRIMERO
+            if (!navigator.onLine) {
+                console.log('📡 Sin conexión detectada, cargando desde IndexedDB...');
+                await cargarProductosOffline();
+                return;
+            }
+
             try {
                 const q = query(collection(db, 'productos'), orderBy('nombre'));
                 const snap = await getDocs(q);
                 const lista = snap.docs.map(d => {
                     const data = d.data();
-                    delete data.id; // Eliminar ID interno si existe
+                    delete data.id;
                     return { id: d.id, ...data };
                 });
                 console.log('📦 Productos cargados:', lista.length);
+                
+                // ⭐ AGREGADO: Guardar en IndexedDB
+                if (dbReady && lista.length > 0) {
+                    try {
+                        await guardarProductosOffline(lista);
+                        console.log('💾 Productos guardados en IndexedDB');
+                    } catch (err) {
+                        console.warn('⚠️ No se pudieron guardar en IndexedDB:', err);
+                    }
+                }
+
                 renderLista(lista);
+
             } catch (e) {
-                console.error('Error cargando productos', e);
-                productosSection.innerHTML = '<p class="text-danger text-center">Error cargando productos</p>';
+                console.error('❌ Error cargando productos desde Firebase:', e);
+                
+                // ⭐ AGREGADO: Fallback a IndexedDB
+                console.log('🔄 Intentando cargar desde IndexedDB...');
+                await cargarProductosOffline();
+            }
+        }
+
+        // ⭐ NUEVA FUNCIÓN: Cargar productos desde IndexedDB
+        async function cargarProductosOffline() {
+            try {
+                // Esperar a que IndexedDB esté lista
+                if (!dbReady) {
+                    console.log('⏳ Esperando IndexedDB...');
+                    await initDB();
+                    dbReady = true;
+                }
+                
+                const productosOffline = await obtenerProductosOffline();
+                
+                if (productosOffline.length > 0) {
+                    console.log('📦 Productos cargados desde IndexedDB:', productosOffline.length);
+                    renderLista(productosOffline);
+                    showToast('📡 Modo offline: mostrando productos guardados', 'warning');
+                } else {
+                    productosSection.innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center my-5">
+                                <i class="fas fa-wifi-slash fa-3x mb-3"></i>
+                                <h5>Sin conexión</h5>
+                                <p>No hay productos disponibles offline.<br>Conéctate a internet para cargar el catálogo.</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('❌ Error cargando productos offline:', error);
+                productosSection.innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger text-center my-5">
+                            <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                            <h5>Error</h5>
+                            <p>No se pudieron cargar los productos</p>
+                        </div>
+                    </div>
+                `;
             }
         }
 
@@ -1390,7 +1582,7 @@
                 col.className = "col-6 col-md-4 col-lg-3 mb-3";
                 
                 col.innerHTML = `
-                    <div class="card h-100 shadow-sm" style="border-radius:10px; cursor: pointer;" 
+                    <div class="h-100 shadow-lg" style="border-radius:10px; cursor: pointer;" 
                         onclick="window.location.href='producto.html#${p.id}'">
                         <img src="${imgSrc}" class="card-img-top" style="border-radius: 10px 10px 0 0;" alt="${p.nombre}" 
                             object-fit: cover; border-radius: 10px 10px 0 0;">
@@ -1406,6 +1598,30 @@
                 productosSection.appendChild(col);
             });
         }
+
+        // ⭐ DEBUG: Verificar estado de IndexedDB
+        window.debugIndexedDB = async function() {
+            console.log('=== DEBUG INDEXEDDB ===');
+            console.log('dbReady:', dbReady);
+            
+            try {
+                await initDB();
+                const productos = await obtenerProductosOffline();
+                console.log('Productos en IndexedDB:', productos.length);
+                console.log('Productos:', productos);
+                
+                if (productos.length > 0) {
+                    console.log('✅ IndexedDB funciona correctamente');
+                } else {
+                    console.warn('⚠️ IndexedDB vacía, necesitas cargar productos con internet primero');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+            }
+            console.log('======================');
+        };
+
+        console.log('💡 Ejecuta debugIndexedDB() en consola para verificar');
 
         // SCROLL DE CATEGORÍAS
         const categoriasContainer = document.getElementById('categoriasContainer');
@@ -1464,6 +1680,13 @@
         async function cargarProductosFiltrados(categoria) {
             const productosSection = document.getElementById('productos-container');
             productosSection.innerHTML = '<p class="text-center">Cargando productos...</p>';
+
+            // ⭐ AGREGADO: Verificar conexión
+            if (!navigator.onLine) {
+                console.log('📡 Sin conexión, filtrando desde IndexedDB...');
+                await filtrarProductosOffline(categoria);
+                return;
+            }
             
             try {
                 const q = query(
@@ -1494,7 +1717,45 @@
                 }
             } catch (e) {
                 console.error('Error cargando productos filtrados:', e);
-                productosSection.innerHTML = '<p class="text-danger text-center">Error cargando productos</p>';
+                
+                // ⭐ AGREGADO: Fallback a IndexedDB
+                await filtrarProductosOffline(categoria);
+            }
+        }
+
+        // ⭐ NUEVA FUNCIÓN: Filtrar productos offline
+        async function filtrarProductosOffline(categoria) {
+            try {
+                if (!dbReady) {
+                    await initDB();
+                    dbReady = true;
+                }
+                
+                const productosOffline = await obtenerProductosPorCategoria(categoria);
+                
+                if (productosOffline.length > 0) {
+                    console.log(`📦 ${productosOffline.length} productos de "${categoria}" desde IndexedDB`);
+                    renderLista(productosOffline);
+                    showToast('📡 Modo offline', 'warning');
+                } else {
+                    document.getElementById('productos-container').innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center my-5">
+                                <i class="fas fa-wifi-slash me-2"></i>
+                                No hay productos de esta categoría disponibles offline
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('❌ Error filtrando offline:', error);
+                document.getElementById('productos-container').innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-danger text-center my-5">
+                            Error cargando productos offline
+                        </div>
+                    </div>
+                `;
             }
         }
 
@@ -1719,10 +1980,58 @@
             });
         }
 
+        // ⭐ MODIFICAR: Monitoreo de conexión mejorado
+        monitorearConexion(
+            // Callback cuando vuelve online
+            async () => {
+                showToast('🌐 Conexión restaurada', 'success');
+                
+                // ⭐ Sincronizar pedidos pendientes
+                try {
+                    const pedidosPendientes = await obtenerPedidosNoSincronizados();
+                    if (pedidosPendientes.length > 0) {
+                        console.log(`📤 Sincronizando ${pedidosPendientes.length} pedidos pendientes...`);
+                        
+                        for (const pedido of pedidosPendientes) {
+                            try {
+                                const docRef = await addDoc(collection(db, 'pedidos'), {
+                                    ...pedido,
+                                    fecha: serverTimestamp()
+                                });
+                                
+                                await marcarPedidoSincronizado(pedido.id);
+                                console.log(`✅ Pedido ${pedido.id} sincronizado con ID ${docRef.id}`);
+                            } catch (error) {
+                                console.error(`❌ Error sincronizando pedido ${pedido.id}:`, error);
+                            }
+                        }
+                        
+                        showToast(`✅ ${pedidosPendientes.length} pedido(s) sincronizado(s)`, 'success');
+                    }
+                } catch (error) {
+                    console.error('❌ Error en sincronización:', error);
+                }
+                
+                // ⭐ Recargar productos desde Firebase
+                cargarProductos();
+            },
+            // Callback cuando se pierde conexión
+            () => {
+                showToast('📡 Sin conexión - Modo offline activado', 'warning');
+                // ⭐ Intentar cargar productos desde IndexedDB inmediatamente
+                cargarProductos();
+            }
+        );
+
     </script>
 
     <!--Boton para instalar PWA-->
-        <button id="btnInstall" hidden>Instalar app</button>
+    <button id="btnInstall" hidden>Instalar app</button>
+    
+    <!-- Boton para subir al Header -->
+    <button id="btnUp">
+        <a href="index.html#" class="nav-link"><i class="fa-solid fa-angle-up"></i></a>
+    </button>
 
         <script>
         // Registrar Service Worker
@@ -1763,14 +2072,32 @@
                 if (btn) btn.hidden = true;
             });
 
-           
+           // ⭐ Agregar después de registrar el SW en index.html
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sworker.js')
+                        .then(reg => {
+                            console.log('✅ SW registrado:', reg.scope);
+                            
+                            // ⭐ Forzar actualización si hay una nueva versión
+                            reg.addEventListener('updatefound', () => {
+                                const newWorker = reg.installing;
+                                newWorker.addEventListener('statechange', () => {
+                                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                        console.log('🔄 Nueva versión disponible');
+                                        // Puedes mostrar un toast aquí para avisar al usuario
+                                    }
+                                });
+                            });
+                        })
+                        .catch(err => console.warn('❌ SW falló:', err));
+                });
+            }
         </script>
 
     <script>
-    // ========================================
-    // SLIDER DESLIZABLE AUTOMÁTICO - CORREGIDO
-    // ========================================
 
+    // SLIDER DESLIZABLE
     document.addEventListener('DOMContentLoaded', function() {
         const track = document.getElementById('sliderTrack');
         const slides = document.querySelectorAll('.slider-slide');
@@ -1808,7 +2135,7 @@
             isTransitioning = true;
             currentSlide = index;
             
-            // ✅ CÁLCULO CORRECTO: 100% por cada slide
+            // CÁLCULO CORRECTO: 100% por cada slide
             const offset = -currentSlide * 100;
             track.style.transform = `translateX(${offset}%)`;
             
