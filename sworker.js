@@ -1,6 +1,5 @@
-const CACHE_NAME = 'gadget-go-v0.7'; // ⭐ Nueva versión
+const CACHE_NAME = 'gadget-go-v0.7';
 
-// ⭐ ARCHIVOS CRÍTICOS (deben estar siempre disponibles)
 const CRITICAL_URLS = [
   './',
   './index.html',
@@ -8,7 +7,6 @@ const CRITICAL_URLS = [
   './manifest.webmanifest'
 ];
 
-// ⭐ ARCHIVOS SECUNDARIOS (importantes pero no críticos)
 const SECONDARY_URLS = [
   "./inventario2.html",
   "./carrito.html",
@@ -23,93 +21,88 @@ const SECONDARY_URLS = [
   './icons/icon-app-512.png'
 ];
 
-// ⭐ CDN externos
 const CDN_URLS = [
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
 ];
 
-// ====================================
 // INSTALACIÓN
-// ====================================
 self.addEventListener('install', (event) => {
-  console.log('✅ SW: Instalando...');
+  console.log('SW: Instalando...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(async (cache) => {
-        console.log('📦 Cacheando archivos críticos...');
+        console.log('Cacheando archivos críticos...');
         
-        // 1. Cachear archivos críticos (DEBE funcionar)
+        // 1. Cachear archivos críticos
         try {
           await cache.addAll(CRITICAL_URLS);
-          console.log('✅ Archivos críticos cacheados');
+          console.log('Archivos críticos cacheados');
         } catch (error) {
-          console.error('❌ Error en archivos críticos:', error);
+          console.error('Error en archivos críticos:', error);
           // Intentar uno por uno
           for (const url of CRITICAL_URLS) {
             try {
               const response = await fetch(url);
               await cache.put(url, response);
-              console.log(`✅ ${url}`);
+              console.log(`${url}`);
             } catch (err) {
-              console.error(`❌ No se pudo cachear: ${url}`, err);
+              console.error(`No se pudo cachear: ${url}`, err);
             }
           }
         }
 
         // 2. Cachear archivos secundarios (pueden fallar)
-        console.log('📦 Cacheando archivos secundarios...');
+        console.log('Cacheando archivos secundarios...');
         for (const url of SECONDARY_URLS) {
           try {
             const response = await fetch(url);
             if (response.ok) {
               await cache.put(url, response);
-              console.log(`✅ ${url}`);
+              console.log(`${url}`);
             }
           } catch (error) {
-            console.warn(`⚠️ No disponible: ${url}`);
+            console.warn(`No disponible: ${url}`);
           }
         }
 
         // 3. Cachear CDNs (opcionales)
-        console.log('📦 Cacheando CDNs...');
+        console.log('Cacheando CDNs...');
         for (const url of CDN_URLS) {
           try {
             const response = await fetch(url, { mode: 'cors' });
             if (response.ok) {
               await cache.put(url, response);
-              console.log(`✅ CDN: ${url.substring(0, 50)}...`);
+              console.log(`CDN: ${url.substring(0, 50)}...`);
             }
           } catch (error) {
-            console.warn(`⚠️ CDN no disponible: ${url.substring(0, 50)}...`);
+            console.warn(`CDN no disponible: ${url.substring(0, 50)}...`);
           }
         }
 
-        console.log('✅ SW instalado correctamente');
+        console.log('SW instalado correctamente');
       })
       .catch(error => {
-        console.error('❌ Error en instalación:', error);
+        console.error('Error en instalación:', error);
       })
   );
   
-  // ⭐ Activar inmediatamente
+  // Activar inmediatamente
   self.skipWaiting();
 });
 
-// ====================================
 // ACTIVACIÓN
-// ====================================
 self.addEventListener('activate', (event) => {
-  console.log('✅ SW: Activando...');
+  console.log('SW: Activando...');
   
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log('🗑️ Eliminando caché antigua:', cache);
+            console.log('Eliminando caché antigua:', cache);
             return caches.delete(cache);
           }
         })
@@ -117,17 +110,15 @@ self.addEventListener('activate', (event) => {
     })
   );
   
-  // ⭐ Tomar control de todas las páginas inmediatamente
+  // Tomar control de todas las páginas inmediatamente
   return self.clients.claim();
 });
 
-// ====================================
 // INTERCEPTAR FETCH
-// ====================================
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
 
-  // ⭐ LISTA DE APIs QUE NO SE DEBEN INTERCEPTAR
+  // LISTA DE APIs QUE NO SE DEBEN INTERCEPTAR
   const skipAPIs = [
     'firestore.googleapis.com',
     'firebaseio.com',
@@ -145,24 +136,23 @@ self.addEventListener('fetch', (event) => {
     'oauth2.googleapis.com',
     'imasdk.googleapis.com',
     'firebasestorage.googleapis.com',
-    'gstatic.com' // ⭐ IMPORTANTE: Firebase usa gstatic
+    'gstatic.com'
   ];
 
-  // ⭐ NO INTERCEPTAR APIs EXTERNAS
+  // NO INTERCEPTAR APIs EXTERNAS
   const shouldSkip = skipAPIs.some(api => url.includes(api));
   
   if (shouldSkip) {
-    return; // Dejar que el navegador maneje normalmente
+    return;
   }
 
-  // ⭐ ESTRATEGIA HÍBRIDA: CACHE FIRST PARA RECURSOS ESTÁTICOS
+  // ESTRATEGIA HÍBRIDA: CACHE FIRST PARA RECURSOS ESTÁTICOS
   const isCDN = CDN_URLS.some(cdn => url.includes(cdn.split('?')[0]));
-  const isLocalStatic = url.includes('.png') || url.includes('.jpg') || 
-                        url.includes('.css') || url.includes('.js') ||
-                        url.includes('bootstrap') || url.includes('font-awesome');
+  const isLocalStatic = url.includes('.png') || url.includes('.jpg') || url.includes('.css') || url.includes('.js') ||
+    url.includes('bootstrap') || url.includes('font-awesome');
 
   if (isCDN || isLocalStatic) {
-    // ⭐ CACHE FIRST para recursos estáticos
+    // CACHE FIRST para recursos estáticos
     event.respondWith(
       caches.match(event.request)
         .then((cached) => {
@@ -195,7 +185,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // ⭐ NETWORK FIRST para documentos HTML y páginas dinámicas
+  // NETWORK FIRST para documentos HTML y páginas dinámicas
   event.respondWith(
     fetch(event.request)
       .then((response) => {
@@ -242,13 +232,11 @@ self.addEventListener('fetch', (event) => {
   );
 });
 
-// ====================================
 // MANEJO DE MENSAJES
-// ====================================
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
 
-console.log('🚀 Service Worker listo');
+console.log('Service Worker listo');
