@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Go!</title>
+    <link rel="manifest" href="./manifest.webmanifest"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="icon" href="./icons/icon-192.png">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Estilos para el boton Instalar App */
+        .thumb { height: 70px; object-fit: cover; border-radius: .35rem;}
+        .thumbs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem;}
+        #btnInstall {
+        position: fixed; right: 16px; bottom: 16px;
+        padding: 12px 16px; border: 0; border-radius: 10px;
+        background: #122C4F; color: white; font-size: 14px; cursor: pointer;
+        box-shadow: 0 6px 18px rgba(0,0,0,.2); z-index: 9999;
+        }
+
+            #btnUp {
+                position: fixed;
+                right: 90rem;
+                bottom: 16px;
+                padding: 8px 8px;
+                border: 0;
+                border-radius: 10px;
+                background: #2d5d9b;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
+
+        @media (max-width: 576px) { 
+            #btnUp {
+                    position: fixed;
+                    right: 90rem;
+                    bottom: 16px;
+                    padding: 8px 8px;
+                    border: 0;
+                    border-radius: 10px;
+                    background: #2d5d9b;
+                    color: white;
+                    font-size: 14px;
+                    cursor: pointer;
+                    box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                    z-index: 9999;
+                    transition: all 0.3s ease;
+                }
+            }
+
+        @media (max-width: 576px) { 
+            #btnUp:hover {
+                position: fixed;
+                right: 320px;
+                bottom: 16px;
+                padding: 8px 8px;
+                border: 0;
+                border-radius: 10px;
+                background: #1b4986;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
+        }
+
+        #btnUp:hover {
+                position: fixed;
+                right: 90rem;
+                bottom: 16px;
+                padding: 8px 8px;
+                border: 0;
+                border-radius: 10px;
+                background: #1b4986;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 0 6px 18px rgba(0,0,0,.3);
+                z-index: 9999;
+                transition: all 0.3s ease;
+            }
+
+        :root {
+            --primary-blue: #122C4F;
+            --cream-bg: #ffffff;
+            --dark-text: #ffffff;
+        }
+
+        .py-4 {
+            padding-top: 3rem !important;
+            padding-bottom: 1rem !important;
+        }
+
+        .navbar {
+            background-color: #122C4F;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-text) !important;
+        }
+
+        .nav-link {
+            color: var(--dark-text) !important;
+            margin: 0 1rem;
+            font-weight: 500;
+        }
+
+        .navbar-nav-ft {
+            --bs-nav-link-padding-x: 0;
+            --bs-nav-link-padding-y: 0rem;
+            --bs-nav-link-font-weight: ;
+            --bs-nav-link-color: var(--bs-navbar-color);
+            --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
+            --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+            display: flex;
+            flex-direction: column;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+            font-size: 18px;
+        }
+
+        @media (max-width: 576px) {        
+                .navbar-nav-ft {
+                --bs-nav-link-padding-x: 0;
+                --bs-nav-link-padding-y: 0rem;
+                --bs-nav-link-font-weight: ;
+                --bs-nav-link-color: var(--bs-navbar-color);
+                --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
+                --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+                display: flex;
+                flex-direction: column;
+                padding-left: 0;
+                margin-bottom: 0;
+                list-style: none;
+                font-size: 14px;
+            }
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            border: none;
+            color: white;
+            padding: .5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger {
+            border: 2px solid #891521;
+            background-color: #891521;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ig {
+            background-color: #891521;
+            border: none;
+            color: white;
+            padding: .5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ig:hover {
+            background-color: #d8472d;
+            border: none;
+            color: white;
+            padding: .5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-blue);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #122C4F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+        }
+
+        .btn-outline-danger-custom {
+            border: 2px solid #DC3545;
+            color: #DC3545;
+            background-color: transparent;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger-custom:hover {
+            background-color: #DC3545;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-box {
+            width: 120px;
+            height: 120px;
+            border: 3px solid var(--primary-blue);
+            border-radius: 12px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-card .card-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            border-radius: 12px;
+            border: none;
+        }
+
+        .modal-header {
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 1px solid #CED4DA;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .nav-link .bi-cart {
+        font-size: 1.8rem;
+        color: white;
+        }
+
+        .nav-link .bi-cart:hover {
+        color: #ffc107;
+        }
+
+        /* Ajustes generales para tarjetas de productos */
+        .card-title {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-text {
+            font-size: 0.75rem !important;
+        }
+
+        .card-body {
+            padding: 0.6rem !important;
+        }
+
+        .price-text {
+            font-size: 1rem !important;
+            font-weight: bold;
+        }
+        /* Altura compacta para celulares */
+        .product-img {
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Altura mayor cuando la pantalla es grande */
+        @media (min-width: 768px) {
+            .product-img {
+                height: 180px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .product-img {
+                height: 220px;
+            }
+        }
+
+        .carousel-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Ajuste de texto del carrusel en móviles */
+        @media (max-width: 576px) {
+            .carousel-caption {
+                bottom: 50px !important;
+                padding: 0 10px !important;
+                width: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center;
+            }
+
+            .carousel-caption h5 {
+                font-size: 1.5rem !important;   
+                font-weight: 700;
+                line-height: 1.2;
+                text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+                
+            }
+
+            .carousel-caption p {
+                font-size: 1rem !important; 
+                font-weight: 600;
+                line-height: 1.2;
+                margin-bottom: 0;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            }
+        }
+
+        /* Ajuste ed texto del carrusel para escritorio */
+        @media (min-width: 992px) {
+            .carousel-caption {
+                bottom: 80px !important;
+                padding: 0 10px !important;
+                width: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                text-align: center;
+            }
+
+            .carousel-caption h5 {
+                font-size: 3rem;
+                text-shadow: 2px 2px 7px rgba(0,0,0,0.7);
+            }
+
+            .carousel-caption p {
+                font-size: 1.5rem !important; 
+                font-weight: 600;
+                line-height: 1.2;
+                margin-bottom: 0;
+                text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) {
+            .carousel-img {
+                height: 260px;
+            }
+        }
+
+        /* Escritorio grande */
+        @media (min-width: 1200px) {
+            .carousel-img {
+                height: 320px;
+            }
+        }
+
+        /* Márgenes y estilo del carrusel - MÁS RECTANGULAR */
+        #heroCarousel {
+            margin: 2rem auto;
+            max-width: 95%;
+            border-radius: 15px; 
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Ajustar altura de las imágenes para hacerlo más rectangular */
+        .carousel-img {
+            height: 280px;
+            object-fit: cover;
+        }
+
+        #heroCarousel .carousel-inner img {
+            height: 280px !important; 
+            object-fit: cover;
+        }
+
+        /* Responsive - Márgenes más pequeños en móvil */
+        @media (max-width: 768px) {
+            #heroCarousel {
+                max-width: 94%;
+                margin: 0.50rem auto;
+            }
+            
+            #heroCarousel .carousel-inner img {
+                height: 125px !important; /* Menos alto en móvil */
+            }
+        }
+
+
+        /* Desktop - Más rectangular (más ancho que alto) */
+        @media (min-width: 1200px) {
+            #heroCarousel {
+                margin: 3rem auto;
+                max-width: 92%;
+            }
+            
+            #heroCarousel .carousel-inner img {
+                height: 250px !important;
+            }
+        }
+
+        /* Ultra ancho (pantallas grandes) */
+        @media (min-width: 1600px) {
+            #heroCarousel .carousel-inner img {
+                height: 250px !important;
+            }
+        }
+
+        /* Slider de Categorías */
+        .categorias-scroll-container {
+            overflow: hidden;
+            position: relative; 
+        }
+
+        /* Slider de Categorias (Escritorio) */
+        @media (min-width: 1200px) {
+            .categorias-scroll-container {
+                overflow: hidden;
+                position: relative;
+                margin-left: 16rem;
+            }
+        }
+
+        .categorias-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            /*padding: 10px 0; */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .categorias-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .categoria-item {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background-color: #fff;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            color: #122C4F;
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .categoria-item:hover {
+            background-color: #f3f4f6;
+            border-color: #122C4F;
+            box-shadow: 0 4px 8px rgba(18, 44, 79, 0.15);
+        }
+
+        .categoria-item.active {
+            background-color: #122C4F;
+            color: white;
+            border-color: #122C4F;
+            box-shadow: 0 4px 12px rgba(18, 44, 79, 0.3);
+        }
+
+        .categoria-item i {
+            font-size: 1.1rem;
+        }
+
+        /* Botones de navegación */
+        .carousel-scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            color: #122C4F;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-scroll-btn:hover {
+            background-color: #122C4F;
+            color: white;
+            border-color: #122C4F;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(18, 44, 79, 0.3);
+        }
+
+        .carousel-scroll-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .carousel-scroll-btn.prev {
+            left: -15px;
+        }
+
+        .carousel-scroll-btn.next {
+            right: -15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .categoria-item {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .carousel-scroll-btn {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .carousel-scroll-btn.prev {
+                left: 0;
+            }
+            
+            .carousel-scroll-btn.next {
+                right: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .categoria-item {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ========================================
+        SLIDER DESLIZABLE MEJORADO
+        ======================================== */
+
+        .slider-container {
+            position: relative;
+            width: 95%;
+            max-width: 1400px;
+            margin: 2rem auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0);
+        }
+
+        .slider-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+        }
+
+        .slider-slide {
+            min-width: 100%;
+            max-width: 100%;
+            width: 100%;
+            position: relative;
+            flex-shrink: 0;
+            flex-grow: 0;
+        }
+
+        .slider-slide img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* Textos sobre las imágenes */
+        .slider-caption {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: white;
+            width: 90%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .slider-caption h5 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-caption p {
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Flechas de navegación */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #122C4F;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-arrow:hover {
+            background-color: #122C4F;
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-prev {
+            left: 20px;
+        }
+
+        .slider-next {
+            right: 20px;
+        }
+
+        /* Indicadores (dots) */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background-color: white;
+            transform: scale(1.3);
+        }
+
+        .slider-dot:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ========================================
+        RESPONSIVE
+        ======================================== */
+
+        /* Tablets */
+        @media (max-width: 768px) {
+            .slider-container {
+                width: 94%;
+                margin: 0.5rem auto;
+            }
+            
+            .slider-slide img {
+                height: 200px;
+            }
+            
+            .slider-caption {
+                bottom: 30px;
+            }
+            
+            .slider-caption h5 {
+                font-size: 1.5rem;
+            }
+            
+            .slider-caption p {
+                font-size: 1rem;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .slider-prev {
+                left: 10px;
+            }
+            
+            .slider-next {
+                right: 10px;
+            }
+        }
+
+        /* Móviles */
+        @media (max-width: 576px) {
+            .slider-container {
+                width: 92%;
+                margin: 0.5rem auto;
+            }
+            
+            .slider-slide img {
+                height: 120px;
+            }
+            
+            .slider-caption {
+                bottom: 20px;
+            }
+            
+            .slider-caption h5 {
+                font-size: 1.2rem;
+            }
+            
+            .slider-caption p {
+                font-size: 0.85rem;
+            }
+            
+            .slider-arrow {
+                width: 25px;
+                height: 25px;
+                font-size: 0.7rem;
+            }
+            
+            .slider-dots {
+                bottom: 10px;
+            }
+            
+            .slider-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        /* Desktop grande */
+        @media (min-width: 1200px) {
+            .slider-container {
+                max-width: 1400px;
+                width: 92%;
+            }
+            
+            .slider-slide img {
+                height: 300px;
+            }
+            
+            .slider-caption {
+                bottom: 60px;
+            }
+            
+            .slider-caption h5 {
+                font-size: 3rem;
+            }
+            
+            .slider-caption p {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Desktop ultra ancho */
+        @media (min-width: 1600px) {
+            .slider-slide img {
+                height: 350px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #122C4F;">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="index.html">
+                <img class="thumbs mx-4" src="./img/Logo-GadgetGo-512x512-v2.png" alt="LogoGadget-Go" width="80">
+            </a>
+                <a class="nav-link position-relative" href="#" data-bs-toggle="modal" data-bs-target="#carritoModal" style="font-size: 1.4rem;">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="contador-carrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #fff7d4; color: #122C4F;">
+                        0
+                    </span>
+                </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" id="loginNavBtn"><a class="nav-link" href="#loginModal" data-bs-toggle="modal" style="font-size: 1.2rem;">Iniciar Sesion</a></li>
+                    <li class="nav-item" id="registerNavBtn"><a class="nav-link" href="#registerModal" data-bs-toggle="modal" style="font-size: 1.2rem;">Registrarse</a></li>
+                    <li class="nav-item" id="logoutBtn" style="display:none;"><a class="nav-link" href="#" style="font-size: 1.2rem;">Cerrar Sesión</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cuenta.html" style="font-size: 1.2rem;">Mi cuenta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#modal" data-bs-toggle="modal" data-bs-target="#modalCont" style="font-size: 1.2rem;">Contacto</a></li>
+                    <li class="nav-item" id="navInventario"><a class="nav-link" href="inventario2.html" style="font-size: 1.2rem;">Inventario</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--Inicio-->
+    <section class="pt-3">
+        <div class="mt-5 pt-5 ">
+            <!-- Slider Deslizable -->
+            <div class="slider-container">
+                <div class="slider-wrapper" id="sliderWrapper">
+                    <div class="slider-track" id="sliderTrack">
+                        <!-- Slide 1 -->
+                        <div class="slider-slide">
+                            <img class="slider-img" src="./img/banner-nosotros-02.png" alt="Banner-Politicas">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mb-5 policy-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0 p-4 mt-3">
+
+                    <h1 class="mb-5 text-center" style="color: #122C4F;"><strong>Conócenos</strong></h1>
+                    <p>Somos un equipo creativo dedicado a transformar ideas en soluciones visuales estratégicas. 
+                        Creemos que cada marca tiene una historia única y nuestro objetivo es ayudar a comunicarla de manera clara, 
+                        estética y auténtica.</p>
+                    <p>Trabajamos con pasión, cuidando cada detalle para que cada diseño no solo se vea bien, sino que tenga un propósito 
+                        y genere impacto.</p>
+                    <p>Nos inspira la innovación, la simplicidad y el deseo de que cada cliente pueda expresar su 
+                        esencia a través de una identidad visual sólida.</p>
+                </div>
+                <div class="card shadow-sm border-0 p-4 mt-5">
+                    <h1 class="text-center" style="color: #122C4F;"><strong>Visión</strong></h1>
+                    <p>“Ser una marca creativa reconocida por transformar ideas en experiencias visuales que conecten emocionalmente con las personas 
+                        y den vida a la identidad de cada proyecto.”</p>
+
+                    <h1 class="mt-3 text-center" style="color: #122C4F;"><strong>Misión</strong></h1>
+                    <p>“Convertirnos en un referente en soluciones visuales estratégicas, guiando a empresas y 
+                        creadores hacia una comunicación sólida y diferenciada en el mundo digital.”</p>
+
+                    <h1 class="mt-3 text-center" style="color: #122C4F;"><strong>Valores</strong></h1>
+                    <ul>
+                        <li><strong>Creatividad con propósito</strong>
+                            <p>No diseñamos solo para que se vea bonito, sino para que comunique algo real y estratégico.</p>
+                        </li>
+                        <li><strong>Autenticidad</strong>
+                            <p>Trabajamos con honestidad, buscamos que cada marca refleje su esencia verdadera.</p>
+                        </li>
+                        <li><strong>Colaboración</strong>
+                            <p>Creemos en trabajar mano a mano con nuestros clientes: sus ideas + nuestra experiencia = mejores resultados.</p>
+                        </li>
+                        <li><strong>Excelencia</strong>
+                            <p>Nos esforzamos por entregar alto nivel de calidad en cada diseño, cuidando detalles y funcionalidad.</p>
+                        </li>
+                        <li><strong>Simplicidad</strong>
+                            <p>Buscamos soluciones visuales limpias y efectivas: hacer lo complejo simple. (Este valor se usa mucho en empresas de diseño, 
+                                ya que un buen diseño no siempre es sobre ornamentación, sino sobre claridad.)</p>
+                        </li>
+                        <li><strong>Empoderamiento</strong>
+                            <p>Queremos que nuestros clientes se sientan más fuertes, más capaces, a través de una identidad visual que los represente 
+                                y les dé confianza.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card shadow-lg border-0 p-4 mt-5">
+                    <h1 class="mb-4 text-center" style="color: #122C4F;"><strong>Equipo de Trabajo</strong></h1>
+                    <p class="text-center">Nuestro equipo de trabajo está conformado por los siguientes integrantes:</p>
+                    <p></p>
+                    <div class="text-center mt-5">
+                        <a href="index.html" class="btn btn-primary btn-lg px-5" style="border:none;">
+                            Volver a la Tienda
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+        
+            <div class="modal-header" style="background:#122C4F; color:white;">
+                <h5 class="modal-title" id="loginLabel">Iniciar Sesión</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input id="user" type="text" class="form-control mb-3" placeholder="Correo">
+
+                <input id="pass" type="password" class="form-control mb-3" placeholder="Contraseña">
+
+                <p id="error-msg" class="text-danger text-center"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button id="loginBtn" class="btn btn-primary w-100">Ingresar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Registro -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header" style="background:#122C4F; color:white;">
+                    <h5 class="modal-title" id="registerLabel">Crear Cuenta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input id="regEmail" type="email" class="form-control mb-3" placeholder="Correo">
+
+                    <input id="regPass" type="password" class="form-control mb-3" placeholder="Contraseña (mínimo 6 caracteres)">
+
+                    <p id="regError" class="text-danger text-center"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="registerBtn" class="btn btn-primary w-100">Registrarse</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script>
+  // Recuperar carrito o inicializarlo vacío
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+  function guardarCarrito() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+  function agregarAlCarrito(producto) {
+    const item = carrito.find(p => p.id === producto.id);
+    if (item) {
+      item.cantidad++;
+    } else {
+      carrito.push(producto);
+    }
+    guardarCarrito();
+    actualizarCarrito();
+    }
+
+  function eliminarDelCarrito(id) {
+    carrito = carrito.filter(p => String(p.id) !== String(id));
+    guardarCarrito();
+    actualizarCarrito();
+    const alert = document.createElement('div');
+    showToast('<i class="fa-solid fa-cart-plus me-2"></i> Producto eliminado del carrito', "danger");
+    alert.className = "alert alert-danger position-fixed top-0 end-0 m-3";
+    alert.textContent = "Producto eliminado del carrito";
+    document.body.appendChild(alert);
+    setTimeout(() => alert.remove(), 2000);
+    }
+
+
+  function vaciarCarrito() {
+    carrito = [];
+    guardarCarrito();
+    actualizarCarrito();
+  }
+
+  // Actualizar vista del carrito en el modal y contador
+  function actualizarCarrito() {
+    const contenedor = document.getElementById('carrito-container');
+    const contador = document.getElementById('contador-carrito');
+    contador.textContent = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+
+    // Escuchar cuando se abre el modal del carrito
+    const carritoModal = document.getElementById('carritoModal');
+    if (carritoModal) {
+        carritoModal.addEventListener('shown.bs.modal', function () {
+
+                actualizarCarrito();
+        });
+    }
+
+    if (carrito.length === 0) {
+      contenedor.innerHTML = '<p class="text-center text-muted">Tu carrito está vacío</p>';
+      return;
+    }
+
+    contenedor.innerHTML = carrito.map(p => `
+      <div class="producto border rounded p-2 my-2 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <img src="${p.imagen}" width="80" class="me-3 rounded">
+          <div> 
+            <h5 class="mb-1">${p.nombre}</h5>
+            <p class="mb-0">$${p.precio} x ${p.cantidad}</p>
+          </div>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito('${p.id}')">X</button>
+      </div>
+    `).join('');
+  }
+
+  // Mostrar carrito al cargar la página
+  document.addEventListener('DOMContentLoaded', actualizarCarrito);
+
+  function showToast(msg, type = "success") {
+        const container = document.getElementById("toastZone");
+
+        const toastEl = document.createElement("div");
+        toastEl.className = `toast align-items-center text-bg-${type} border-0`;
+        toastEl.setAttribute("role", "alert");
+        toastEl.setAttribute("aria-live", "assertive");
+        toastEl.setAttribute("aria-atomic", "true");
+
+        toastEl.innerHTML = `
+            <div class="d-flex my-5">
+                <div class="toast-body">${msg}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+
+        container.appendChild(toastEl);
+
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+
+        // remover después de 4 segundos
+        setTimeout(() => toastEl.remove(), 2000);
+    }
+</script>
+
+    <section id="productos" class="container my-5 ab-5" style="margin-bottom: 4rem;">
+        <div id="productos-container" class="row g-3 mb-3" style="background-color: #f0f0f0; border-radius: 16px;"></div>
+    </section>
+    
+    <!-- Modal Contacto -->
+    <div class="modal fade" id="modalCont">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Contacto</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <h4 class="modal-title" style="color: #122C4F;"><strong>¡Contáctanos!</strong></h4>
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-success ms-auto">
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                            </button>
+                            <button type="button" class="btn btn-ig ms-auto">
+                                <i class="fab fa-instagram me-2"></i>Instagram
+                            </button>
+                        </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal del Carrito -->
+    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #122C4F; color: white;">
+                    <h5 class="modal-title" id="carritoLabel">
+                        <i class="fas fa-shopping-cart me-2"></i>Tu Carrito
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+            
+                <div class="modal-body" id="carrito-container">
+                    <p class="text-center text-muted">Cargando carrito...</p>
+                </div>
+
+                <!-- Total del carrito -->
+                <div class="px-4 py-2 bg-light border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Total:</h5>
+                        <h2 class="mb-0 text-success" id="total-carrito">$0.00</h2>
+                    </div>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" onclick="vaciarCarrito()">
+                        <i class="fas fa-trash me-2"></i>Vaciar Carrito
+                    </button>
+                    <a href="carrito.html">
+                        <button type="button" class="btn btn-secondary">
+                            Ir al Carrito
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal de Checkout -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #122C4F; color: white;">
+                    <h5 class="modal-title" id="checkoutLabel">
+                        <i class="fas fa-shipping-fast me-2"></i>Datos de Envío
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+            
+                <div class="modal-body">
+                    <form id="checkoutForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="nombreEnvio" class="form-label">Nombre completo *</label>
+                                <input type="text" class="form-control" id="nombreEnvio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefonoEnvio" class="form-label">Teléfono *</label>
+                                <input type="tel" class="form-control" id="telefonoEnvio" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="direccionEnvio" class="form-label">Dirección completa *</label>
+                                <input type="text" class="form-control" id="direccionEnvio" placeholder="Calle, número, colonia" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ciudadEnvio" class="form-label">Ciudad *</label>
+                                <input type="text" class="form-control" id="ciudadEnvio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cpEnvio" class="form-label">Código Postal *</label>
+                                <input type="text" class="form-control" id="cpEnvio" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="notasEnvio" class="form-label">Notas adicionales (opcional)</label>
+                                <textarea class="form-control" id="notasEnvio" rows="2" placeholder="Referencias, instrucciones especiales, etc."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Resumen del pedido -->
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <h6 class="mb-3"><i class="fas fa-receipt me-2"></i>Resumen del Pedido</h6>
+                            <div id="resumen-productos"></div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total a pagar:</strong>
+                                <strong class="text-success" id="total-checkout">$0.00</strong>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" form="checkoutForm" class="btn btn-success" id="btnConfirmarPedido">
+                        <i class="fas fa-check-circle me-2"></i>Confirmar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Footer-->
+    <footer class="text-white py-3" style="background-color: #122C4F;">
+        <!--Politicas-->
+            <ul class="navbar-nav-ft ms-auto">
+                <li class="nav-item text-center"><a class="nav-link" href="politicas-devolución.html">Politicas de Devolucion</a></li>
+                <li class="nav-item text-center"><a class="nav-link" href="#">Politicas de Uso</a></li>
+                <li class="nav-item text-center"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
+            </ul>
+        <p class="text-center mt-3">&copy; <strong>Gadget Go</strong> - Todos los derechos reservados</p>
+
+    </footer>
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, query, orderBy, setDoc, doc, addDoc, serverTimestamp, getDoc, where } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBg9o3wVZoA26Aob2RnbVPV8vGv4GE44gs",
+            authDomain: "primer-proyecto-7b2f4.firebaseapp.com",
+            projectId: "primer-proyecto-7b2f4",
+            storageBucket: "primer-proyecto-7b2f4.firebasestorage.app",
+            messagingSenderId: "627220736817",
+            appId: "1:627220736817:web:a2eb4f187322c609f11e10"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // FUNCIÓN PARA OBTENER ROL
+        async function obtenerRolUsuario(uid) {
+            try {
+                const docRef = doc(db, "usuarios", uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    return docSnap.data().rol || "usuario";
+                } else {
+                    console.warn("Usuario no encontrado en Firestore");
+                    return "usuario";
+                }
+            } catch (error) {
+                console.error("Error obteniendo rol:", error);
+                return "usuario";
+            }
+        }
+
+        // AUTH STATE LISTENER
+        onAuthStateChanged(auth, async (user) => {
+            const btnLoginNav = document.getElementById('loginNavBtn');
+            const btnRegisterNav = document.getElementById('registerNavBtn');
+            const btnLogoutNav = document.getElementById('logoutBtn');
+            const navInventario = document.getElementById('navInventario');
+
+            if (user) {
+                console.log("Usuario autenticado:", user.email);
+                
+                const rol = await obtenerRolUsuario(user.uid);
+                console.log("Rol del usuario:", rol);
+                
+                localStorage.setItem('userRole', rol);
+                localStorage.setItem('userEmail', user.email);
+                localStorage.setItem('userId', user.uid);
+
+                if (btnLoginNav) btnLoginNav.style.display = 'none';
+                if (btnRegisterNav) btnRegisterNav.style.display = 'none';
+                if (btnLogoutNav) btnLogoutNav.style.display = 'block';
+
+                // VERIFICAR SI YA SE MOSTRÓ EL TOAST EN ESTA SESIÓN
+                const toastMostrado = sessionStorage.getItem('loginToastShown');
+                
+                if (navInventario) {
+                    if (rol === 'admin') {
+                        navInventario.style.display = 'block';
+                        
+                        // Solo mostrar si NO se ha mostrado antes
+                        if (!toastMostrado) {
+                            showToast(`Bienvenido Admin: ${user.email}`, 'success');
+                            sessionStorage.setItem('loginToastShown', 'true');
+                        }
+                    } else {
+                        navInventario.style.display = 'none';
+                        
+                        // Solo mostrar si NO se ha mostrado antes
+                        if (!toastMostrado) {
+                            showToast(`Bienvenido: ${user.email}`, 'success');
+                            sessionStorage.setItem('loginToastShown', 'true');
+                        }
+                    }
+                }
+            } else {
+                console.log("No hay usuario autenticado");
+                
+                // LIMPIAR LA BANDERA AL CERRAR SESIÓN
+                sessionStorage.removeItem('loginToastShown');
+                
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userId');
+
+                if (btnLoginNav) btnLoginNav.style.display = 'block';
+                if (btnRegisterNav) btnRegisterNav.style.display = 'block';
+                if (btnLogoutNav) btnLogoutNav.style.display = 'none';
+                if (navInventario) navInventario.style.display = 'none';
+            }
+        });
+
+        // LOGIN
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('loginBtn');
+            const inputUser = document.getElementById('user');
+            const inputPass = document.getElementById('pass');
+            const errorMsg = document.getElementById('error-msg');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (loginBtn && inputUser && inputPass) {
+                loginBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const email = inputUser.value.trim();
+                    const pass = inputPass.value;
+
+                    if (!email || !pass) {
+                        if (errorMsg) errorMsg.textContent = 'Completa todos los campos';
+                        return;
+                    }
+
+                    try {
+                        await signInWithEmailAndPassword(auth, email, pass);
+                        if (errorMsg) errorMsg.textContent = '';
+                        const modalEl = document.getElementById('loginModal');
+                        if (modalEl) {
+                            const bs = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                            bs.hide();
+                        }
+                    } catch (e) {
+                        console.error('Login error:', e);
+                        if (errorMsg) errorMsg.textContent = 'Credenciales inválidas';
+                    }
+                });
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    try {
+                        await signOut(auth);
+                        showToast('Sesión cerrada', 'primary');
+                    } catch (e) {
+                        console.error('Logout error', e);
+                    }
+                });
+            }
+
+            // REGISTRO
+            const registerBtn = document.getElementById('registerBtn');
+            const regEmail = document.getElementById('regEmail');
+            const regPass = document.getElementById('regPass');
+            const regError = document.getElementById('regError');
+
+            if (registerBtn) {
+                registerBtn.addEventListener('click', async () => {
+                    const email = regEmail.value.trim();
+                    const pass = regPass.value.trim();
+
+                    if (!email || !pass) {
+                        regError.textContent = "Completa todos los campos";
+                        return;
+                    }
+
+                    try {
+                        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+                        const user = userCredential.user;
+
+                        await setDoc(doc(db, "usuarios", user.uid), {
+                            email: email,
+                            rol: "usuario",
+                            fechaCreacion: new Date().toISOString()
+                        });
+
+                        regError.textContent = "";
+
+                        const modalEl = document.getElementById('registerModal');
+                        const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                        modal.hide();
+
+                        showToast("Cuenta creada con éxito");
+                    } catch (e) {
+                        console.error(e);
+                        if (e.code === "auth/email-already-in-use") {
+                            regError.textContent = "Este correo ya está registrado";
+                        } else if (e.code === "auth/weak-password") {
+                            regError.textContent = "La contraseña debe tener al menos 6 caracteres";
+                        } else {
+                            regError.textContent = "Error al registrar";
+                        }
+                    }
+                });
+            }
+        });
+
+        // ACTUALIZAR CARRITO
+        window.actualizarCarrito = function() {
+            const contenedor = document.getElementById('carrito-container');
+            const contador = document.getElementById('contador-carrito');
+            const totalElement = document.getElementById('total-carrito');
+            const btnProceder = document.getElementById('btnProcederPago');
+            
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            contador.textContent = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+
+            if (carrito.length === 0) {
+                contenedor.innerHTML = '<p class="text-center text-muted py-4">Tu carrito está vacío</p>';
+                if (totalElement) totalElement.textContent = '$0.00';
+                if (btnProceder) btnProceder.disabled = true;
+                return;
+            }
+
+            if (btnProceder) btnProceder.disabled = false;
+
+            const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+            if (totalElement) {
+                totalElement.textContent = '$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 });
+            }
+
+            contenedor.innerHTML = carrito.map(p => `
+                <div class="producto border rounded p-3 my-2 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <img src="${p.imagen}" width="80" height="80" class="me-3 rounded" style="object-fit: cover; cursor: pointer;" onclick="window.location.href='producto.html#${p.id}'">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">${p.nombre}</h6>
+                            <p class="mb-0 text-muted">$${Number(p.precio).toLocaleString('es-MX', {minimumFractionDigits: 2})} x ${p.cantidad} Pieza(s)</p>
+                            <p class="mb-0 fw-bold text-success">Subtotal: $${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarDelCarrito('${p.id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // ABRIR CHECKOUT
+        window.abrirCheckout = function() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            
+            if (carrito.length === 0) {
+                showToast('El carrito está vacío', 'warning');
+                return;
+            }
+
+            const userEmail = localStorage.getItem('userEmail');
+            if (!userEmail) {
+                showToast('Debes iniciar sesión para realizar una compra', 'warning');
+                const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+                if (carritoModal) carritoModal.hide();
+                const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                loginModal.show();
+                return;
+            }
+
+            const resumen = document.getElementById('resumen-productos');
+            const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+            
+            resumen.innerHTML = carrito.map(p => `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>${p.nombre} x${p.cantidad}</span>
+                    <span>$${(p.precio * p.cantidad).toLocaleString('es-MX', {minimumFractionDigits: 2})}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('total-checkout').textContent = '$' + total.toLocaleString('es-MX', {minimumFractionDigits: 2});
+
+            const carritoModal = bootstrap.Modal.getInstance(document.getElementById('carritoModal'));
+            if (carritoModal) carritoModal.hide();
+            
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            checkoutModal.show();
+        }
+
+        // CONFIRMAR PEDIDO
+        function inicializarCheckout() {
+            const checkoutForm = document.getElementById('checkoutForm');
+            
+            if (!checkoutForm) {
+                console.warn('Formulario checkoutForm no encontrado aún');
+                return;
+            }
+            
+            checkoutForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const btnConfirmar = document.getElementById('btnConfirmarPedido');
+                btnConfirmar.disabled = true;
+                btnConfirmar.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Procesando...';
+
+                const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                const userId = localStorage.getItem('userId');
+                const userEmail = localStorage.getItem('userEmail');
+
+                if (!userId || carrito.length === 0) {
+                    showToast('Error: no hay usuario o carrito vacío', 'danger');
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Pedido';
+                    return;
+                }
+
+                const total = carrito.reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
+
+                const pedido = {
+                    userId: userId,
+                    userEmail: userEmail,
+                    productos: carrito,
+                    total: total,
+                    estado: 'pendiente',
+                    datosEnvio: {
+                        nombre: document.getElementById('nombreEnvio').value,
+                        telefono: document.getElementById('telefonoEnvio').value,
+                        direccion: document.getElementById('direccionEnvio').value,
+                        ciudad: document.getElementById('ciudadEnvio').value,
+                        codigoPostal: document.getElementById('cpEnvio').value,
+                        notas: document.getElementById('notasEnvio').value
+                    },
+                    fecha: serverTimestamp()
+                };
+
+                try {
+                    const docRef = await addDoc(collection(db, 'pedidos'), pedido);
+                    console.log('✅ Pedido creado:', docRef.id);
+
+                    localStorage.removeItem('carrito');
+                    actualizarCarrito();
+
+                    const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+                    if (checkoutModal) checkoutModal.hide();
+
+                    document.getElementById('checkoutForm').reset();
+
+                    showToast('¡Pedido realizado con éxito!', 'success');
+
+                } catch (error) {
+                    console.error('Error creando pedido:', error);
+                    showToast('Error al procesar el pedido: ' + error.message, 'danger');
+                } finally {
+                    btnConfirmar.disabled = false;
+                    btnConfirmar.innerHTML = '<i class="fas fa-check-circle me-2"></i>Confirmar Pedido';
+                }
+            });
+            
+            console.log('Event listener del checkout agregado correctamente');
+        }
+
+        // Llamar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inicializarCheckout);
+        } else {
+            inicializarCheckout();
+        }
+         // INICIAR
+            cargarProductos();
+
+        // Lee y COMPRIME múltiples imágenes
+        function readFilesAsDataURLs(fileList, maxSize = 512) {
+            const files = Array.from(fileList || []);
+
+            return Promise.all(files.map(file => compressImage(file, maxSize)));
+        }
+        // Funcion para comprimir imagenes de los productos
+        // Comprime una sola imagen
+        function compressImage(file, maxSize = 512) {
+            return new Promise((resolve, reject) => {
+
+                const reader = new FileReader();
+                reader.onload = e => {
+
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+
+                        // Obtener tamaño original
+                        let width = img.width;
+                        let height = img.height;
+
+                        // Redimensionar si es necesario
+                        if (width > height) {
+                            if (width > maxSize) {
+                                height *= maxSize / width;
+                                width = maxSize;
+                            }
+                        } else {
+                            if (height > maxSize) {
+                                width *= maxSize / height;
+                                height = maxSize;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Comprimir como JPG calidad 0.75
+                        const dataURL = canvas.toDataURL("image/jpeg", 0.75);
+
+                        resolve({
+                            name: file.name,
+                            type: "image/jpeg",
+                            dataURL: dataURL
+                        });
+                    };
+
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+    </script>
+
+    <!--Boton para instalar PWA-->
+    <button id="btnInstall" hidden>Instalar app</button>
+    
+    <!-- Boton para subir al Header -->
+    <button id="btnUp">
+        <a href="index.html#" class="nav-link"><i class="fa-solid fa-angle-up"></i></a>
+    </button>
+
+        <script>
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sworker.js')
+                    .then(reg => console.log('SW registrado:', reg.scope))
+                    .catch(err => console.warn('SW fallo:', err));
+                });
+            }
+
+            // Manejo del "beforeinstallprompt" para mostrar botón de instalar
+            let deferredPrompt = null;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                const btn = document.getElementById('btnInstall');
+                if (btn) btn.hidden = false;
+            });
+
+            // Click en el botón para lanzar el prompt
+            document.addEventListener('click', async (e) => {
+                if (e.target && e.target.id === 'btnInstall') {
+                    if (!deferredPrompt) return;
+                    e.target.disabled = true;
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log('Instalación:', outcome);
+                    deferredPrompt = null;
+                    e.target.hidden = true;
+                }
+            });
+
+            // Evento cuando la app fue instalada
+            window.addEventListener('appinstalled', () => {
+                console.log('PWA instalada');
+                const btn = document.getElementById('btnInstall');
+                if (btn) btn.hidden = true;
+            });
+
+           
+        </script>
+
+    <script>
+
+    // SLIDER DESLIZABLE AUTOMÁTICO - CORREGIDO
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('sliderTrack');
+        const slides = document.querySelectorAll('.slider-slide');
+        const prevBtn = document.getElementById('sliderPrev');
+        const nextBtn = document.getElementById('sliderNext');
+        const dotsContainer = document.getElementById('sliderDots');
+        
+        // Verificar que existen los elementos
+        if (!track || !slides.length || !prevBtn || !nextBtn || !dotsContainer) {
+            console.error('No se encontraron los elementos del slider');
+            return;
+        }
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        let autoplayInterval;
+        let isTransitioning = false;
+
+        // Crear indicadores (dots)
+        function createDots() {
+            dotsContainer.innerHTML = ''; // Limpiar dots existentes
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'slider-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Ir a un slide específico
+        function goToSlide(index) {
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
+            currentSlide = index;
+            
+            // CÁLCULO CORRECTO: 100% por cada slide
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
+            
+            // Actualizar dots
+            updateDots();
+            
+            // Resetear autoplay
+            resetAutoplay();
+            
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 600);
+        }
+
+        // Actualizar indicadores activos
+        function updateDots() {
+            const dots = document.querySelectorAll('.slider-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Slide anterior
+        function prevSlide() {
+            const newIndex = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+            goToSlide(newIndex);
+        }
+
+        // Slide siguiente
+        function nextSlide() {
+            const newIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
+            goToSlide(newIndex);
+        }
+
+        // Autoplay
+        function startAutoplay() {
+            autoplayInterval = setInterval(() => {
+                nextSlide();
+            }, 5000); // Cambiar cada 5 segundos
+        }
+
+        function stopAutoplay() {
+            clearInterval(autoplayInterval);
+        }
+
+        function resetAutoplay() {
+            stopAutoplay();
+            startAutoplay();
+        }
+
+        // Event Listeners para botones
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // Pausar al pasar el mouse
+        track.addEventListener('mouseenter', stopAutoplay);
+        track.addEventListener('mouseleave', startAutoplay);
+
+        // Soporte táctil (swipe)
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoplay();
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            startAutoplay();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left
+                } else {
+                    prevSlide(); // Swipe right
+                }
+            }
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+
+        // Reajustar en cambio de orientación o resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                // Reposicionar al slide actual sin animación
+                track.style.transition = 'none';
+                const offset = -currentSlide * 100;
+                track.style.transform = `translateX(${offset}%)`;
+                
+                // Restaurar transición después de un frame
+                requestAnimationFrame(() => {
+                    track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                });
+            }, 250);
+        });
+
+        // Inicializar
+        createDots();
+        startAutoplay();
+
+        console.log('Slider inicializado correctamente');
+    });
+    </script>
+</body>
+</html>
